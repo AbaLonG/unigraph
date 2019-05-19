@@ -1,16 +1,21 @@
 package ua.nure.ki.ytretiakov.unigraph.web.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import ua.nure.ki.ytretiakov.unigraph.data.repository.StudentRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class IndexController {
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     private final static Logger logger = Logger.getLogger(IndexController.class);
 
@@ -19,6 +24,7 @@ public class IndexController {
         logger.info("greet() method invoked");
         logger.info("Request: " + request);
         logger.info("Response: " + response);
+        logger.info("studentRepository: " + studentRepository);
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         modelAndView.addObject("name", "username");
