@@ -6,7 +6,10 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -14,7 +17,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:settings.properties")
 @ComponentScan({"ua.nure.ki.ytretiakov.unigraph"})
-@EnableJpaRepositories("ua.nure.ki.ytretiakov.unigraph.data")
+@EnableJpaRepositories("ua.nure.ki.ytretiakov.unigraph.data.repository")
 public class ContextConfiguration {
 
     private static final String DB_DRIVER_PROPERTY_KEY = "db.driver";
@@ -35,9 +38,19 @@ public class ContextConfiguration {
         dataSource.setDriverClassName(getProperty(DB_DRIVER_PROPERTY_KEY));
         dataSource.setUrl(getProperty(DB_URL_PROPERTY_KEY));
         dataSource.setUsername(getProperty(DB_USER_PROPERTY_KEY));
+//        dataSource.setCatalog(getProperty(DB_SCHEMA_PROPERTY_KEY));
         dataSource.setPassword(getProperty(DB_PASSWORD_PROPERTY_KEY));
-        dataSource.setSchema(getProperty(DB_SCHEMA_PROPERTY_KEY));
         return dataSource;
+    }
+
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        final HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setDatabase(Database.POSTGRESQL);
+        adapter.setDatabasePlatform(getProperty(DB_HIBERNATE_DIALECT_PROPERTY_KEY));
+        adapter.setGenerateDdl(true);
+        adapter.setShowSql(true);
+        return adapter;
     }
 
     @Bean
@@ -45,6 +58,7 @@ public class ContextConfiguration {
         final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource());
         emf.setJpaProperties(jpaProperties());
+        emf.setJpaVendorAdapter(jpaVendorAdapter());
         emf.setPackagesToScan("ua.nure.ki.ytretiakov.unigraph.data.model");
         emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         return emf;

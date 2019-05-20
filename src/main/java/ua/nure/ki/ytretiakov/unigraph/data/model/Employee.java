@@ -1,11 +1,11 @@
 package ua.nure.ki.ytretiakov.unigraph.data.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import java.sql.Date;
+import javax.persistence.*;
+import java.util.Date;
 
-@MappedSuperclass
-public abstract class Employee extends Entity {
+@Entity
+@Table
+public class Employee extends IDEntity {
 
     @Column
     private String firstName;
@@ -14,24 +14,30 @@ public abstract class Employee extends Entity {
     private String lastName;
 
     @Column
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column
     private String password;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private EmployeeType type;
+
     public Employee() {
 
     }
 
-    public Employee(final String firstName, final String lastName, final Date dateOfBirth, final String email, final String password) {
+    public Employee(final String firstName, final String lastName, final Date dateOfBirth, final String email, final String password, final EmployeeType type) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.password = password;
+        this.type = type;
     }
 
     public String getFirstName() {
@@ -72,5 +78,13 @@ public abstract class Employee extends Entity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public EmployeeType getType() {
+        return type;
+    }
+
+    public void setType(EmployeeType type) {
+        this.type = type;
     }
 }

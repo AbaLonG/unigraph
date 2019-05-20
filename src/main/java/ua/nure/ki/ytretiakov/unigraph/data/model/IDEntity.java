@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class Entity {
+public abstract class IDEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
-    private Long id;
+    protected Long id;
 
-    public Entity() {
+    public IDEntity() {
 
     }
 
@@ -19,15 +19,15 @@ public abstract class Entity {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof Entity)) return false;
-        Entity entity = (Entity) o;
+        if (!(o instanceof IDEntity)) return false;
+        IDEntity entity = (IDEntity) o;
         return getId().equals(entity.getId());
     }
 
