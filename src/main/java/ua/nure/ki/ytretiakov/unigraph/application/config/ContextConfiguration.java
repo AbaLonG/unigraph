@@ -21,7 +21,6 @@ import java.util.Properties;
 public class ContextConfiguration {
 
     private static final String DB_DRIVER_PROPERTY_KEY = "db.driver";
-    private static final String DB_SCHEMA_PROPERTY_KEY = "db.schema";
     private static final String DB_USER_PROPERTY_KEY = "db.user";
     private static final String DB_PASSWORD_PROPERTY_KEY = "db.password";
     private static final String DB_URL_PROPERTY_KEY = "db.url";
@@ -38,7 +37,6 @@ public class ContextConfiguration {
         dataSource.setDriverClassName(getProperty(DB_DRIVER_PROPERTY_KEY));
         dataSource.setUrl(getProperty(DB_URL_PROPERTY_KEY));
         dataSource.setUsername(getProperty(DB_USER_PROPERTY_KEY));
-//        dataSource.setCatalog(getProperty(DB_SCHEMA_PROPERTY_KEY));
         dataSource.setPassword(getProperty(DB_PASSWORD_PROPERTY_KEY));
         return dataSource;
     }
