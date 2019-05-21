@@ -7,4 +7,8 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     Group findByTitle(final String title);
 
+    void deleteByTitle(final String title);
+
+    boolean existsByTitle(final String title);
+
 }

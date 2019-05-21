@@ -3,12 +3,16 @@ package ua.nure.ki.ytretiakov.unigraph.data.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "GROUPS")
 @Entity
+@Table(name = "GROUPS")
 public class Group extends IDEntity {
 
     @Column
     private String title;
+
+    @ManyToOne(targetEntity = GroupManager.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "manager_id", foreignKey = @ForeignKey(name = "employee_id_fk"))
+    private Employee groupManager;
 
     @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "group")
     private List<Employee> students;
@@ -35,5 +39,13 @@ public class Group extends IDEntity {
 
     public void setStudents(List<Employee> students) {
         this.students = students;
+    }
+
+    public Employee getGroupManager() {
+        return groupManager;
+    }
+
+    public void setGroupManager(Employee groupManager) {
+        this.groupManager = groupManager;
     }
 }

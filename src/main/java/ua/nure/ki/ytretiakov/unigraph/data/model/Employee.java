@@ -16,7 +16,7 @@ public class Employee extends IDEntity {
     @Column @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
