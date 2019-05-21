@@ -5,5 +5,6 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
+    Group findByTitle(final String title);
 
 }

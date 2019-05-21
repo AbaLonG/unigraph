@@ -24,7 +24,7 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, Long> {
     }
 
     @Test
-    public void testSaveEmployee() {
+    public void testSaveEmployeeWithoutGroup() {
         final String email = "tretyak.yar@gmail.com";
         final Employee employeeByEmail = repository.findEmployeeByEmail(email);
         if (employeeByEmail != null) {
