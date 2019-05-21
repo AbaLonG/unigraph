@@ -7,25 +7,28 @@ import java.util.Date;
 @Table(name = "EMPLOYEES")
 public class Employee extends IDEntity {
 
-    @Column
+    @Column(nullable = false)
     private String firstName;
 
-    @Column
+    @Column(nullable = false)
     private String lastName;
 
-    @Column
-    @Temporal(TemporalType.DATE)
+    @Column @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EmployeeType type;
+
+    @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "group_id_fk"))
+    private Group group;
 
     public Employee() {
 
@@ -44,47 +47,55 @@ public class Employee extends IDEntity {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public EmployeeType getType() {
         return type;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setType(EmployeeType type) {
         this.type = type;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
