@@ -6,12 +6,14 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
 import java.util.Properties;
 
 @Configuration
@@ -60,6 +62,12 @@ public class ContextConfiguration {
         emf.setPackagesToScan("ua.nure.ki.ytretiakov.unigraph.data.model");
         emf.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         return emf;
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        final JpaTransactionManager manager = new JpaTransactionManager();
+        return manager;
     }
 
     private Properties jpaProperties() {

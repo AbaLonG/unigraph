@@ -5,5 +5,8 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
+    Employee findEmployeeByEmail(final String email);
+
+    void deleteByEmail(final String email);
 
 }

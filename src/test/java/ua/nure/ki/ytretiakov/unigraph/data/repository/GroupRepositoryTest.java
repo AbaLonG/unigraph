@@ -2,9 +2,10 @@ package ua.nure.ki.ytretiakov.unigraph.data.repository;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.nure.ki.ytretiakov.unigraph.WebContextLoader;
+import org.springframework.data.jpa.repository.JpaRepository;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 
-public class GroupRepositoryTest extends WebContextLoader {
+public class GroupRepositoryTest extends RepositoryTester<Group, Long> {
 
     @Autowired
     private GroupRepository repository;
@@ -12,5 +13,10 @@ public class GroupRepositoryTest extends WebContextLoader {
     @Test
     public void testRepository() {
         assertNotNull(repository);
+    }
+
+    @Override
+    public JpaRepository<Group, Long> getRepository() {
+        return repository;
     }
 }
