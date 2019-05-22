@@ -5,16 +5,20 @@ import java.util.List;
 
 @Entity
 @Table(name = "GROUPS")
-public class Group extends IDEntity {
+public class Group {
 
-    @Column
+    @Id
+    @Column(unique = true, nullable = false)
     private String title;
 
     @ManyToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private Employee groupManager;
 
-    @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.EAGER)
     private List<Employee> students;
+
+    @ManyToOne(targetEntity = Cathedra.class, cascade = CascadeType.ALL)
+    private Cathedra cathedra;
 
     public Group() {
 
@@ -48,10 +52,11 @@ public class Group extends IDEntity {
         this.groupManager = groupManager;
     }
 
-    @Override
-    public String toString() {
-        return "Group{" +
-                "id=" + id +
-                '}';
+    public Cathedra getCathedra() {
+        return cathedra;
+    }
+
+    public void setCathedra(Cathedra cathedra) {
+        this.cathedra = cathedra;
     }
 }

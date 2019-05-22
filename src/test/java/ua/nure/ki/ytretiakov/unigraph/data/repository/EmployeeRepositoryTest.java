@@ -5,15 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.EmployeeType;
-import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-public class EmployeeRepositoryTest extends RepositoryTester<Employee, Long> {
+public class EmployeeRepositoryTest extends RepositoryTester<Employee, String> {
 
     @Autowired
     private EmployeeRepository repository;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Test
     public void testDeleteAll() {
@@ -27,26 +30,15 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, Long> {
     @Test
     public void testSaveEmployeeWithoutGroup() {
         final String email = "tretyak.yar@gmail.com";
-        final Employee employeeByEmail = repository.findEmployeeByEmail(email);
-        if (employeeByEmail != null) {
-            repository.deleteByEmail(email);
+        final Optional<Employee> optionalEmployee = repository.findById(email);
+        if (optionalEmployee.isPresent()) {
+            final Employee employeeByEmail = optionalEmployee.get();
+            repository.deleteById(email);
         }
         final Employee me = new Employee("Yaroslav", "Tretiakov", new Date(), email, "password", EmployeeType.Student);
         final Employee savedMe = repository.save(me);
-        assertNotNull(savedMe.getId());
         assertEquals(me.getEmail(), savedMe.getEmail());
         assertFalse(repository.findAll().isEmpty());
-    }
-
-    @Test
-    public void testSaveEmployeeWithGroup() {
-        Group g = new Group("ki-15-3");
-        Employee e = new Employee("test", "test", new Date(), "test", "test", EmployeeType.Student);
-        e.setGroup(g);
-        Employee save = repository.save(e);
-        assertNotNull(save);
-        assertNotNull(save.getGroup());
-        assertEquals(g, save.getGroup());
     }
 
     @Test
@@ -55,18 +47,18 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, Long> {
         if (employees.isEmpty()) {
             repository.save(new Employee("User", "User", new Date(), "email", "password", EmployeeType.Student));
             assertEquals(1, repository.count());
-            final Employee employeeByEmail = repository.findEmployeeByEmail("email");
+            final Employee employeeByEmail = repository.findById("email").get();
             assertNotNull(employeeByEmail);
         } else {
             final Employee searched = employees.get(0);
             final String email = searched.getEmail();
-            final Employee found = repository.findEmployeeByEmail(email);
+            final Employee found = repository.findById(email).get();
             assertEquals(searched, found);
         }
     }
 
     @Override
-    public JpaRepository<Employee, Long> getRepository() {
+    public JpaRepository<Employee, String> getRepository() {
         return repository;
     }
 }

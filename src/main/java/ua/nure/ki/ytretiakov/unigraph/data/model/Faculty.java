@@ -5,15 +5,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "FACULTIES")
-public class Faculty extends IDEntity {
+public class Faculty {
 
-    @Column
+    @Id
+    @Column(unique = true, nullable = false)
     private String title;
 
     @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private Employee manager;
 
-    @OneToMany(targetEntity = Cathedra.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Cathedra.class, cascade = CascadeType.ALL, mappedBy = "faculty")
     private List<Cathedra> cathedras;
 
     public Faculty(final String title) {
@@ -42,12 +43,5 @@ public class Faculty extends IDEntity {
 
     public void setCathedras(List<Cathedra> cathedras) {
         this.cathedras = cathedras;
-    }
-
-    @Override
-    public String toString() {
-        return "Faculty{" +
-                "id=" + id +
-                '}';
     }
 }

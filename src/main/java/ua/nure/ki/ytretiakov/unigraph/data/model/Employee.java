@@ -5,7 +5,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "EMPLOYEES")
-public class Employee extends IDEntity {
+public class Employee {
+
+    @Id
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String firstName;
@@ -15,9 +19,6 @@ public class Employee extends IDEntity {
 
     @Column @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
-
-    @Column(nullable = false, unique = true)
-    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -96,12 +97,5 @@ public class Employee extends IDEntity {
 
     public void setGroup(Group group) {
         this.group = group;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                '}';
     }
 }

@@ -9,7 +9,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 
 import java.util.Date;
 
-public class GroupRepositoryTest extends RepositoryTester<Group, Long> {
+public class GroupRepositoryTest extends RepositoryTester<Group, String> {
 
     @Autowired
     private GroupRepository repository;
@@ -30,7 +30,7 @@ public class GroupRepositoryTest extends RepositoryTester<Group, Long> {
     }
 
     @Override
-    public JpaRepository<Group, Long> getRepository() {
+    public JpaRepository<Group, String> getRepository() {
         return repository;
     }
 }

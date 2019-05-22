@@ -1,12 +1,14 @@
 package ua.nure.ki.ytretiakov.unigraph.data.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "CATHEDRAS")
-public class Cathedra extends IDEntity {
+public class Cathedra {
 
-    @Column
+    @Id
+    @Column(unique = true, nullable = false)
     private String title;
 
     @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
@@ -14,6 +16,9 @@ public class Cathedra extends IDEntity {
 
     @ManyToOne(targetEntity = Faculty.class, cascade = CascadeType.ALL)
     private Faculty faculty;
+
+    @OneToMany(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cathedra", orphanRemoval = true)
+    private List<Group> groups;
 
     public Cathedra() {
 
@@ -45,12 +50,5 @@ public class Cathedra extends IDEntity {
 
     public void setCathedraManager(Employee cathedraManager) {
         this.cathedraManager = cathedraManager;
-    }
-
-    @Override
-    public String toString() {
-        return "Cathedra{" +
-                "id=" + id +
-                '}';
     }
 }
