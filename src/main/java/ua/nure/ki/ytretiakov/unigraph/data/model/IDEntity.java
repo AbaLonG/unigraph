@@ -7,7 +7,7 @@ import java.util.Objects;
 public abstract class IDEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     protected Long id;
 
@@ -24,11 +24,11 @@ public abstract class IDEntity {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof IDEntity)) return false;
-        IDEntity entity = (IDEntity) o;
-        return getId().equals(entity.getId());
+        IDEntity idEntity = (IDEntity) o;
+        return Objects.equals(getId(), idEntity.getId());
     }
 
     @Override

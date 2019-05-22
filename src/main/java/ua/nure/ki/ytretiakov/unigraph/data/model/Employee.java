@@ -26,8 +26,7 @@ public class Employee extends IDEntity {
     @Enumerated(EnumType.STRING)
     private EmployeeType type;
 
-    @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "group_id", foreignKey = @ForeignKey(name = "group_id_fk"))
+    @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
 
     public Employee() {
@@ -97,5 +96,12 @@ public class Employee extends IDEntity {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                '}';
     }
 }

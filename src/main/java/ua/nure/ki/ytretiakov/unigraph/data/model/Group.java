@@ -10,11 +10,10 @@ public class Group extends IDEntity {
     @Column
     private String title;
 
-    @ManyToOne(targetEntity = GroupManager.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "manager_id", foreignKey = @ForeignKey(name = "employee_id_fk"))
+    @ManyToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private Employee groupManager;
 
-    @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "group")
+    @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private List<Employee> students;
 
     public Group() {
@@ -47,5 +46,12 @@ public class Group extends IDEntity {
 
     public void setGroupManager(Employee groupManager) {
         this.groupManager = groupManager;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                '}';
     }
 }

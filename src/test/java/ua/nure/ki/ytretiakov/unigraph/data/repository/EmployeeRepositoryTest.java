@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.EmployeeType;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,17 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, Long> {
         assertNotNull(savedMe.getId());
         assertEquals(me.getEmail(), savedMe.getEmail());
         assertFalse(repository.findAll().isEmpty());
+    }
+
+    @Test
+    public void testSaveEmployeeWithGroup() {
+        Group g = new Group("ki-15-3");
+        Employee e = new Employee("test", "test", new Date(), "test", "test", EmployeeType.Student);
+        e.setGroup(g);
+        Employee save = repository.save(e);
+        assertNotNull(save);
+        assertNotNull(save.getGroup());
+        assertEquals(g, save.getGroup());
     }
 
     @Test

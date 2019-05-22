@@ -9,12 +9,10 @@ public class Cathedra extends IDEntity {
     @Column
     private String title;
 
-    @OneToOne(targetEntity = CathedraManager.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cathedra_manager_id", unique = true, nullable = false, foreignKey = @ForeignKey(name = "cathedra_manager_id_fk"))
+    @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private Employee cathedraManager;
 
     @ManyToOne(targetEntity = Faculty.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "faculty_id", foreignKey = @ForeignKey(name = "faculty_id_fk"))
     private Faculty faculty;
 
     public Cathedra() {
@@ -47,5 +45,12 @@ public class Cathedra extends IDEntity {
 
     public void setCathedraManager(Employee cathedraManager) {
         this.cathedraManager = cathedraManager;
+    }
+
+    @Override
+    public String toString() {
+        return "Cathedra{" +
+                "id=" + id +
+                '}';
     }
 }
