@@ -3,6 +3,7 @@ package ua.nure.ki.ytretiakov.unigraph.data.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ua.nure.ki.ytretiakov.unigraph.data.exception.DatabaseException;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
@@ -12,7 +13,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.service.GroupService;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
 public class GroupServiceImpl implements GroupService {
 
     private static Logger logger = Logger.getLogger(GroupServiceImpl.class);

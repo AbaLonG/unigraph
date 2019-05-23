@@ -15,6 +15,14 @@ import java.util.Date;
 
 public class UnigraphServiceTest extends WebContextLoader {
 
+    private static final String DEAN = "dean";
+    private static final String MANAGER = "manager";
+    private static final String CURATOR = "CURATOR", CUR = "cur";
+    private static final String KIU = "KIU";
+    private static final String EVM = "evm";
+    private static final String KI_3 = "ki-15-3", KI_5 = "ki-15-5";
+    private static final String S1 = "s1", S2 = "s2", S3 = "S3";
+
     @Autowired
     private UnigraphService service;
 
@@ -30,46 +38,44 @@ public class UnigraphServiceTest extends WebContextLoader {
     }
 
     @Test
-    public void testSaveEmployee() {
-        final String dean = "dean", manager = "manager", curator = "curator", kiFaculty = "KIU", evm = "evm", ki15 = "ki-15-3";
-        final Employee facultyManger = new Employee(dean, dean, new Date(), dean, dean, EmployeeType.Teacher);
-        final Employee cathedraManager = new Employee(manager, manager, new Date(), manager, manager, EmployeeType.Teacher);
-        final Employee groupManager = new Employee(curator, curator, new Date(), curator, curator, EmployeeType.Teacher);
-        final Faculty faculty = new Faculty(kiFaculty, facultyManger);
-        final Cathedra cathedra = new Cathedra(evm, cathedraManager, faculty);
-        final Group group = new Group(ki15, groupManager, cathedra);
-        final Employee s1 = new Employee("s1", "s1", new Date(), "s1", "s1", EmployeeType.Student);
-        final Employee s2 = new Employee("s2", "s2", new Date(), "s2", "s2", EmployeeType.Student);
-        final Employee s3 = new Employee("s3", "s3", new Date(), "s3", "s3", EmployeeType.Student);
+    public void testUnigraphService() {
+        saveEmployeeGroupCathedraFaculty();
+        updateEmployeeSetOtherGroup();
+    }
+
+    private void saveEmployeeGroupCathedraFaculty() {
+        final Employee facultyManger = new Employee(DEAN, DEAN, new Date(), DEAN, DEAN, EmployeeType.Teacher);
+        final Employee cathedraManager = new Employee(MANAGER, MANAGER, new Date(), MANAGER, MANAGER, EmployeeType.Teacher);
+        final Employee groupManager = new Employee(CURATOR, CURATOR, new Date(), CURATOR, CURATOR, EmployeeType.Teacher);
+        final Faculty faculty = new Faculty(KIU, facultyManger);
+        final Cathedra cathedra = new Cathedra(EVM, cathedraManager, faculty);
+        final Group group = new Group(KI_5, groupManager, cathedra);
+        final Employee s1 = new Employee(S1, S1, new Date(), S1, S1, EmployeeType.Student);
+        final Employee s2 = new Employee(S2, S2, new Date(), S2, S2, EmployeeType.Student);
+        final Employee s3 = new Employee(S3, S3, new Date(), S3, S3, EmployeeType.Student);
         s1.setGroup(group);
         s2.setGroup(group);
         s3.setGroup(group);
         service.getEmployeeService().save(s1);
         service.getEmployeeService().save(s2);
         service.getEmployeeService().save(s3);
-        assertNotNull(service.getEmployeeService().findById(dean));
-        assertNotNull(service.getEmployeeService().findById(manager));
-        assertNotNull(service.getEmployeeService().findById(curator));
-        assertNotNull(service.getFacultyService().findById(kiFaculty).getFacultyManager());
-        assertEquals(facultyManger.getEmail(), service.getFacultyService().findById(kiFaculty).getFacultyManager().getEmail());
-        assertNotNull(service.getGroupService().findById(ki15).getStudents());
-        assertFalse(service.getGroupService().findById(ki15).getStudents().isEmpty());
-        assertEquals(3, service.getGroupService().findById(ki15).getStudents().size());
-        updateEmployeeSetOtherGroup();
+        assertNotNull(service.getEmployeeService().findById(DEAN));
+        assertNotNull(service.getEmployeeService().findById(MANAGER));
+        assertNotNull(service.getEmployeeService().findById(CURATOR));
+        assertNotNull(service.getFacultyService().findById(KIU).getFacultyManager());
+        assertEquals(facultyManger.getEmail(), service.getFacultyService().findById(KIU).getFacultyManager().getEmail());
+        assertNotNull(service.getGroupService().findById(KI_5).getStudents());
+        assertFalse(service.getGroupService().findById(KI_5).getStudents().isEmpty());
+        assertEquals(3, service.getGroupService().findById(KI_5).getStudents().size());
     }
 
     public void updateEmployeeSetOtherGroup() {
-        try {
-            final String cur = "cur";
-            final Employee manager = new Employee(cur, cur, new Date(), cur, cur, EmployeeType.Teacher);
-            final Group group = new Group("ki-15-5", manager, service.getCathedraService().findById("evm"));
-            service.getGroupService().save(group);
-            final Employee s1 = service.getEmployeeService().findById("s1");
-            s1.setGroup(group);
-            service.getEmployeeService().save(s1);
-            assertEquals("ki-15-5", service.getEmployeeService().findById(s1.getEmail()).getGroup().getTitle());
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
+        final Employee manager = new Employee(CUR, CUR, new Date(), CUR, CUR, EmployeeType.Teacher);
+        final Group group = new Group(KI_3, manager, service.getCathedraService().findById(EVM));
+        service.getGroupService().save(group);
+        final Employee s1 = service.getEmployeeService().findById(S1);
+        s1.setGroup(group);
+        service.getEmployeeService().save(s1);
+        assertEquals(KI_3, service.getEmployeeService().findById(s1.getEmail()).getGroup().getTitle());
     }
 }

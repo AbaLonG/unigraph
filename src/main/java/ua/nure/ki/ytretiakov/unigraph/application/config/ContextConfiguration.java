@@ -32,6 +32,7 @@ public class ContextConfiguration {
     private static final String DB_HIBERNATE_DIALECT_PROPERTY_KEY = "db.hibernate.dialect";
     private static final String DB_HIBERNATE_SHOW_SQL_PROPERTY_KEY = "db.hibernate.show_sql";
     private static final String DB_HIBERNATE_HBM2DDL_PROPERTY_KEY = "db.hibernate.hbm2ddl.auto";
+    private static final String HIBERNATE_ENABLE_LAZY_LOAD_NO_TRANS = "hibernate.enable_lazy_load_no_trans";
 
     @Autowired
     private Environment environment;
@@ -86,6 +87,7 @@ public class ContextConfiguration {
         properties.put(DB_HIBERNATE_DIALECT_PROPERTY_KEY, getProperty(DB_HIBERNATE_DIALECT_PROPERTY_KEY));
         properties.put(DB_HIBERNATE_SHOW_SQL_PROPERTY_KEY, getProperty(DB_HIBERNATE_SHOW_SQL_PROPERTY_KEY));
         properties.put(DB_HIBERNATE_HBM2DDL_PROPERTY_KEY, getProperty(DB_HIBERNATE_HBM2DDL_PROPERTY_KEY));
+        properties.put(HIBERNATE_ENABLE_LAZY_LOAD_NO_TRANS, true);
         return properties;
     }
 
