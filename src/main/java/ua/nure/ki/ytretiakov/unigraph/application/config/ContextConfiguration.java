@@ -2,10 +2,7 @@ package ua.nure.ki.ytretiakov.unigraph.application.config;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +12,9 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -23,6 +22,7 @@ import java.util.Properties;
 @PropertySource("classpath:settings.properties")
 @ComponentScan({"ua.nure.ki.ytretiakov.unigraph"})
 @EnableJpaRepositories("ua.nure.ki.ytretiakov.unigraph.data.repository")
+@EnableTransactionManagement
 public class ContextConfiguration {
 
     private static final String DB_DRIVER_PROPERTY_KEY = "db.driver";
@@ -57,7 +57,7 @@ public class ContextConfiguration {
         adapter.setDatabase(Database.POSTGRESQL);
         adapter.setDatabasePlatform(getProperty(DB_HIBERNATE_DIALECT_PROPERTY_KEY));
         adapter.setGenerateDdl(true);
-        adapter.setShowSql(true);
+        adapter.setShowSql(Boolean.valueOf(getProperty(DB_HIBERNATE_SHOW_SQL_PROPERTY_KEY)));
         return adapter;
     }
 
@@ -73,9 +73,12 @@ public class ContextConfiguration {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager() {
-        final JpaTransactionManager manager = new JpaTransactionManager();
-        return manager;
+    @Autowired
+    public JpaTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
+        final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setDataSource(dataSource());
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
+        return jpaTransactionManager;
     }
 
     private Properties jpaProperties() {
