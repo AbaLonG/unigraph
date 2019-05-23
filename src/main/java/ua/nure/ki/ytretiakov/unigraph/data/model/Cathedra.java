@@ -17,7 +17,7 @@ public class Cathedra {
     @ManyToOne(targetEntity = Faculty.class, cascade = CascadeType.ALL, optional = false)
     private Faculty faculty;
 
-    @OneToMany(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cathedra")
+    @OneToMany(targetEntity = Group.class, cascade = CascadeType.ALL, mappedBy = "cathedra")
     private List<Group> groups;
 
     public Cathedra(final String title, final Employee cathedraManager, final Faculty faculty) {

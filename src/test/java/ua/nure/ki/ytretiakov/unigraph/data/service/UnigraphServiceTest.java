@@ -69,7 +69,7 @@ public class UnigraphServiceTest extends WebContextLoader {
         assertEquals(3, service.getGroupService().findById(KI_5).getStudents().size());
     }
 
-    public void updateEmployeeSetOtherGroup() {
+    private void updateEmployeeSetOtherGroup() {
         final Employee manager = new Employee(CUR, CUR, new Date(), CUR, CUR, EmployeeType.Teacher);
         final Group group = new Group(KI_3, manager, service.getCathedraService().findById(EVM));
         service.getGroupService().save(group);
