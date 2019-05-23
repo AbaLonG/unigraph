@@ -14,11 +14,11 @@ public class Group {
     @ManyToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private Employee groupManager;
 
-    @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.EAGER)
-    private List<Employee> students;
-
     @ManyToOne(targetEntity = Cathedra.class, cascade = CascadeType.ALL, optional = false)
     private Cathedra cathedra;
+
+    @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL, mappedBy = "group")
+    private List<Employee> students;
 
     public Group(final String title, final Employee groupManager, final Cathedra cathedra) {
         this.title = title;

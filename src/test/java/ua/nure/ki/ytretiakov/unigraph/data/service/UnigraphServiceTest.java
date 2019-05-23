@@ -1,8 +1,6 @@
 package ua.nure.ki.ytretiakov.unigraph.data.service;
 
 import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,7 +41,9 @@ public class UnigraphServiceTest extends WebContextLoader {
         final Employee s1 = new Employee("s1", "s1", new Date(), "s1", "s1", EmployeeType.Student);
         final Employee s2 = new Employee("s2", "s2", new Date(), "s2", "s2", EmployeeType.Student);
         final Employee s3 = new Employee("s3", "s3", new Date(), "s3", "s3", EmployeeType.Student);
-        s1.setGroup(group); s2.setGroup(group); s3.setGroup(group);
+        s1.setGroup(group);
+        s2.setGroup(group);
+        s3.setGroup(group);
         service.getEmployeeService().save(s1);
         service.getEmployeeService().save(s2);
         service.getEmployeeService().save(s3);
@@ -52,11 +52,20 @@ public class UnigraphServiceTest extends WebContextLoader {
         assertNotNull(service.getEmployeeService().findById(curator));
         assertNotNull(service.getFacultyService().findById(kiFaculty).getFacultyManager());
         assertEquals(facultyManger.getEmail(), service.getFacultyService().findById(kiFaculty).getFacultyManager().getEmail());
+        assertNotNull(service.getGroupService().findById(ki15).getStudents());
+        assertFalse(service.getGroupService().findById(ki15).getStudents().isEmpty());
+        assertEquals(3, service.getGroupService().findById(ki15).getStudents().size());
+        updateEmployeeSetOtherGroup();
     }
 
-    @Ignore
-    @Test
-    public void testUpdateEmployeeSetOtherGroup() {
-
+    public void updateEmployeeSetOtherGroup() {
+        final String cur = "cur";
+        final Employee manager = new Employee(cur, cur, new Date(), cur, cur, EmployeeType.Teacher);
+        final Group group = new Group("ki-15-5", manager, service.getCathedraService().findById("evm"));
+        service.getGroupService().save(group);
+        final Employee s1 = service.getEmployeeService().findById("s1");
+        s1.setGroup(group);
+        service.getEmployeeService().save(s1);
+        assertEquals("ki-15-5", service.getEmployeeService().findById(s1.getEmail()).getGroup().getTitle());
     }
 }
