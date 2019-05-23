@@ -11,7 +11,7 @@ public class Faculty {
     @Column(unique = true, nullable = false)
     private String title;
 
-    @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL, optional = false)
     private Employee manager;
 
     @OneToMany(targetEntity = Cathedra.class, cascade = CascadeType.ALL, mappedBy = "faculty")

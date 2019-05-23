@@ -1,5 +1,7 @@
 package ua.nure.ki.ytretiakov.unigraph.data.model;
 
+import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
+
 import javax.persistence.*;
 import java.util.Date;
 

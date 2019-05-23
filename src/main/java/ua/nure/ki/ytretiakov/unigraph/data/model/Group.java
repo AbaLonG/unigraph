@@ -17,7 +17,7 @@ public class Group {
     @OneToMany(targetEntity = Employee.class, cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.EAGER)
     private List<Employee> students;
 
-    @ManyToOne(targetEntity = Cathedra.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Cathedra.class, cascade = CascadeType.ALL, optional = false)
     private Cathedra cathedra;
 
     public Group() {

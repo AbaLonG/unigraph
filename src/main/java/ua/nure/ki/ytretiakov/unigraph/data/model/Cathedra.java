@@ -11,10 +11,10 @@ public class Cathedra {
     @Column(unique = true, nullable = false)
     private String title;
 
-    @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL, optional = false)
     private Employee cathedraManager;
 
-    @ManyToOne(targetEntity = Faculty.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Faculty.class, cascade = CascadeType.ALL, optional = false)
     private Faculty faculty;
 
     @OneToMany(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cathedra", orphanRemoval = true)
