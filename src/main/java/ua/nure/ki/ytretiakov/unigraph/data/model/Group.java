@@ -20,12 +20,14 @@ public class Group {
     @ManyToOne(targetEntity = Cathedra.class, cascade = CascadeType.ALL, optional = false)
     private Cathedra cathedra;
 
-    public Group() {
-
+    public Group(final String title, final Employee groupManager, final Cathedra cathedra) {
+        this.title = title;
+        this.groupManager = groupManager;
+        this.cathedra = cathedra;
     }
 
-    public Group(final String title) {
-        this.title = title;
+    public Group() {
+
     }
 
     public String getTitle() {

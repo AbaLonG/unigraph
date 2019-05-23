@@ -17,15 +17,17 @@ public class Cathedra {
     @ManyToOne(targetEntity = Faculty.class, cascade = CascadeType.ALL, optional = false)
     private Faculty faculty;
 
-    @OneToMany(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cathedra", orphanRemoval = true)
+    @OneToMany(targetEntity = Group.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cathedra")
     private List<Group> groups;
+
+    public Cathedra(final String title, final Employee cathedraManager, final Faculty faculty) {
+        this.title = title;
+        this.cathedraManager = cathedraManager;
+        this.faculty = faculty;
+    }
 
     public Cathedra() {
 
-    }
-
-    public Cathedra(final String title) {
-        this.title = title;
     }
 
     public Faculty getFaculty() {

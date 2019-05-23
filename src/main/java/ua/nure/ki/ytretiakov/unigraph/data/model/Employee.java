@@ -32,10 +32,6 @@ public class Employee {
     @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
 
-    public Employee() {
-
-    }
-
     public Employee(final String firstName, final String lastName, final Date dateOfBirth, final String email, final String password, final EmployeeType type) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +39,10 @@ public class Employee {
         this.email = email;
         this.password = password;
         this.type = type;
+    }
+
+    public Employee() {
+
     }
 
     public String getFirstName() {

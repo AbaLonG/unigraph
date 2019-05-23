@@ -36,4 +36,20 @@ public class UnigraphService {
             logger.info(e);
         }
     }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public GroupService getGroupService() {
+        return groupService;
+    }
+
+    public CathedraService getCathedraService() {
+        return cathedraService;
+    }
+
+    public FacultyService getFacultyService() {
+        return facultyService;
+    }
 }

@@ -15,9 +15,6 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, String> {
     @Autowired
     private EmployeeRepository repository;
 
-    @Autowired
-    private GroupRepository groupRepository;
-
     @Test
     public void testDeleteAll() {
         repository.deleteAll();

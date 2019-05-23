@@ -12,36 +12,41 @@ public class Faculty {
     private String title;
 
     @OneToOne(targetEntity = Employee.class, cascade = CascadeType.ALL, optional = false)
-    private Employee manager;
+    private Employee facultyManager;
 
     @OneToMany(targetEntity = Cathedra.class, cascade = CascadeType.ALL, mappedBy = "faculty")
     private List<Cathedra> cathedras;
 
-    public Faculty(final String title) {
+    public Faculty(final String title, final Employee facultyManager) {
         this.title = title;
+        this.facultyManager = facultyManager;
+    }
+
+    public Faculty() {
+
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
-    public Employee getManager() {
-        return manager;
+    public Employee getFacultyManager() {
+        return facultyManager;
     }
 
-    public void setManager(Employee manager) {
-        this.manager = manager;
+    public void setFacultyManager(final Employee facultyManager) {
+        this.facultyManager = facultyManager;
     }
 
     public List<Cathedra> getCathedras() {
         return cathedras;
     }
 
-    public void setCathedras(List<Cathedra> cathedras) {
+    public void setCathedras(final List<Cathedra> cathedras) {
         this.cathedras = cathedras;
     }
 }
