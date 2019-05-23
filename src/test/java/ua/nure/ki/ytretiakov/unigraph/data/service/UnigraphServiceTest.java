@@ -1,8 +1,11 @@
 package ua.nure.ki.ytretiakov.unigraph.data.service;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import ua.nure.ki.ytretiakov.unigraph.WebContextLoader;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
@@ -17,14 +20,15 @@ public class UnigraphServiceTest extends WebContextLoader {
     @Autowired
     private UnigraphService service;
 
-    @Before
-    public void deleteAll() {
-        service.clearDb();
-    }
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-    @Test
-    public void testUnigraphService() {
-        assertNotNull(service);
+    @After
+    public void deleteAll() {
+        jdbcTemplate.execute("DROP TABLE public.employees CASCADE");
+        jdbcTemplate.execute("DROP TABLE public.groups CASCADE");
+        jdbcTemplate.execute("DROP TABLE public.cathedras CASCADE");
+        jdbcTemplate.execute("DROP TABLE public.faculties CASCADE");
     }
 
     @Test
@@ -43,5 +47,16 @@ public class UnigraphServiceTest extends WebContextLoader {
         service.getEmployeeService().save(s1);
         service.getEmployeeService().save(s2);
         service.getEmployeeService().save(s3);
+        assertNotNull(service.getEmployeeService().findById(dean));
+        assertNotNull(service.getEmployeeService().findById(manager));
+        assertNotNull(service.getEmployeeService().findById(curator));
+        assertNotNull(service.getFacultyService().findById(kiFaculty).getFacultyManager());
+        assertEquals(facultyManger.getEmail(), service.getFacultyService().findById(kiFaculty).getFacultyManager().getEmail());
+    }
+
+    @Ignore
+    @Test
+    public void testUpdateEmployeeSetOtherGroup() {
+
     }
 }

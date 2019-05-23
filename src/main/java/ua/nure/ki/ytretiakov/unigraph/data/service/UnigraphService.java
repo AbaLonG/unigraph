@@ -25,18 +25,6 @@ public class UnigraphService {
         this.facultyService = facultyService;
     }
 
-    public void clearDb() {
-        try {
-            employeeService.deleteAll();
-            groupService.deleteAll();
-            cathedraService.deleteAll();
-            facultyService.deleteAll();
-        } catch (final Exception e) {
-            logger.info("Error during clearing DB");
-            logger.info(e);
-        }
-    }
-
     public EmployeeService getEmployeeService() {
         return employeeService;
     }
