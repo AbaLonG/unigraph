@@ -11,4 +11,6 @@ public interface Service<E, ID extends Serializable> {
     void deleteById(ID id);
 
     void deleteAll();
+
+    boolean existsById(ID id);
 }

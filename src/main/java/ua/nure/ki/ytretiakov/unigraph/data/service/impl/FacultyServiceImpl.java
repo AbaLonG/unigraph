@@ -65,6 +65,15 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
+    public boolean existsById(final String title) {
+        if (title == null) {
+            throw new DatabaseException("Faculty title is NULL");
+        }
+        logger.info("Looking for Faculty with title: " + title);
+        return repository.existsById(title);
+    }
+
+    @Override
     public void deleteAll() {
         repository.deleteAll();
     }

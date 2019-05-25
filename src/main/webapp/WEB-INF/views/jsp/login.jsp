@@ -11,7 +11,14 @@
 </head>
 <body>
 <div>
-    <h1>Hello ${employee.email}</h1>
+    <h1>Login</h1>
+    <form:form method="post" action="${pageContext.request.contextPath}/login" modelAttribute="employee">
+        <form:label path="email">Email</form:label>
+        <form:input path="email"/>
+        <form:label path="password">Password</form:label>
+        <form:password path="password"/>
+        <input type="submit" value="Log in">
+    </form:form>
 </div>
 </body>
 </html>

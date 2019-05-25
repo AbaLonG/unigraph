@@ -9,14 +9,16 @@ import java.util.Date;
 @Table(name = "EMPLOYEES")
 public class Employee {
 
-    @Id
+    @Id @Column(nullable = false, unique = true)
+    private String login;
+
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String firstName;
 
-    @Column(nullable = false)
+    @Column
     private String lastName;
 
     @Column @Temporal(TemporalType.DATE)
@@ -25,24 +27,32 @@ public class Employee {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Column @Enumerated(EnumType.STRING)
     private EmployeeType type;
 
     @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
 
-    public Employee(final String firstName, final String lastName, final Date dateOfBirth, final String email, final String password, final EmployeeType type) {
+    public Employee(final String login, final String email,  final String password, final String firstName, final String lastName, final Date dateOfBirth, final EmployeeType type) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.password = password;
         this.type = type;
     }
 
     public Employee() {
 
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getFirstName() {

@@ -44,15 +44,15 @@ public class UnigraphServiceTest extends WebContextLoader {
     }
 
     private void saveEmployeeGroupCathedraFaculty() {
-        final Employee facultyManger = new Employee(DEAN, DEAN, new Date(), DEAN, DEAN, EmployeeType.Teacher);
-        final Employee cathedraManager = new Employee(MANAGER, MANAGER, new Date(), MANAGER, MANAGER, EmployeeType.Teacher);
-        final Employee groupManager = new Employee(CURATOR, CURATOR, new Date(), CURATOR, CURATOR, EmployeeType.Teacher);
+        final Employee facultyManger = new Employee(DEAN, DEAN, DEAN, DEAN, DEAN, new Date(), EmployeeType.Teacher);
+        final Employee cathedraManager = new Employee(MANAGER, MANAGER, MANAGER, MANAGER, MANAGER, new Date(), EmployeeType.Teacher);
+        final Employee groupManager = new Employee(CURATOR, CURATOR, CURATOR, CURATOR, CURATOR, new Date(), EmployeeType.Teacher);
         final Faculty faculty = new Faculty(KIU, facultyManger);
         final Cathedra cathedra = new Cathedra(EVM, cathedraManager, faculty);
         final Group group = new Group(KI_5, groupManager, cathedra);
-        final Employee s1 = new Employee(S1, S1, new Date(), S1, S1, EmployeeType.Student);
-        final Employee s2 = new Employee(S2, S2, new Date(), S2, S2, EmployeeType.Student);
-        final Employee s3 = new Employee(S3, S3, new Date(), S3, S3, EmployeeType.Student);
+        final Employee s1 = new Employee(S1, S1, S1, S1, S1, new Date(), EmployeeType.Student);
+        final Employee s2 = new Employee(S2, S2, S2, S2, S2, new Date(), EmployeeType.Student);
+        final Employee s3 = new Employee(S3, S3, S3, S3, S3, new Date(), EmployeeType.Student);
         s1.setGroup(group);
         s2.setGroup(group);
         s3.setGroup(group);
@@ -70,7 +70,7 @@ public class UnigraphServiceTest extends WebContextLoader {
     }
 
     private void updateEmployeeSetOtherGroup() {
-        final Employee manager = new Employee(CUR, CUR, new Date(), CUR, CUR, EmployeeType.Teacher);
+        final Employee manager = new Employee(CUR, CUR, CUR, CUR, CUR, new Date(), EmployeeType.Teacher);
         final Group group = new Group(KI_3, manager, service.getCathedraService().findById(EVM));
         service.getGroupService().save(group);
         final Employee s1 = service.getEmployeeService().findById(S1);

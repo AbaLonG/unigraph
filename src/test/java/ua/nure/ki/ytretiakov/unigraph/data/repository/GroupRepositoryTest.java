@@ -21,7 +21,8 @@ public class GroupRepositoryTest extends RepositoryTester<Group, String> {
 
     @Test(expected = Exception.class)
     public void testFailSaveGroupWithoutCathedra() {
-        final Employee manager = new Employee("man", "man", new Date(), "man", "pass", EmployeeType.Teacher);
+        final String man = "man";
+        final Employee manager = new Employee(man, man, man, man, man, new Date(), EmployeeType.Teacher);
         final Group group = new Group();
         group.setTitle("ki-15-3");
         group.setGroupManager(manager);

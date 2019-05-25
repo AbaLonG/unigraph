@@ -32,7 +32,7 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, String> {
             final Employee employeeByEmail = optionalEmployee.get();
             repository.deleteById(email);
         }
-        final Employee me = new Employee("Yaroslav", "Tretiakov", new Date(), email, "password", EmployeeType.Student);
+        final Employee me = new Employee("AbaLonG", email, "password", "Yaroslav", "Tretiakov", new Date(), EmployeeType.Teacher);
         final Employee savedMe = repository.save(me);
         assertEquals(me.getEmail(), savedMe.getEmail());
         assertFalse(repository.findAll().isEmpty());
@@ -42,7 +42,7 @@ public class EmployeeRepositoryTest extends RepositoryTester<Employee, String> {
     public void testFindByEmail() {
         final List<Employee> employees = repository.findAll();
         if (employees.isEmpty()) {
-            repository.save(new Employee("User", "User", new Date(), "email", "password", EmployeeType.Student));
+            repository.save(new Employee("user", "email", "password", "user", "user", new Date(), EmployeeType.Student));
             assertEquals(1, repository.count());
             final Employee employeeByEmail = repository.findById("email").get();
             assertNotNull(employeeByEmail);

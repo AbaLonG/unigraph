@@ -67,6 +67,15 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
+    public boolean existsById(final String title) {
+        if (title == null) {
+            throw new DatabaseException("Group title is NULL");
+        }
+        logger.info("Looking for Group with title: " + title);
+        return repository.existsById(title);
+    }
+
+    @Override
     public void deleteAll() {
         repository.deleteAll();
     }

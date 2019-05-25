@@ -31,43 +31,52 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee == null) {
             throw new DatabaseException("Employee is NULL");
         }
-        logger.info("Saving employee: " + employee.getEmail());
+        logger.info("Saving employee: " + employee.getLogin());
         if (employee.getType() == EmployeeType.Student) {
             if (employee.getGroup() == null) {
                 throw new DatabaseException("Student employee type has null group");
             }
         }
         repository.saveAndFlush(employee);
-        logger.info("Employee " + employee.getEmail() + " is saved");
+        logger.info("Employee " + employee.getLogin() + " is saved");
     }
 
     @Override
-    public Employee findById(final String employeeEmail) {
-        logger.info("Looking for employee: " + employeeEmail);
-        if (employeeEmail == null) {
+    public Employee findById(final String login) {
+        logger.info("Looking for employee: " + login);
+        if (login == null) {
             throw new DatabaseException("Employee email is NULL");
         }
-        final Optional<Employee> byId = repository.findById(employeeEmail);
+        final Optional<Employee> byId = repository.findById(login);
         if (byId.isPresent()) {
-            logger.info("Employee with id " + employeeEmail + " is found");
+            logger.info("Employee with login " + login + " is found");
             return byId.get();
         } else {
-            throw new DatabaseException("No employee with such email" + employeeEmail);
+            throw new DatabaseException("No employee with such login" + login);
         }
     }
 
     @Override
-    public void deleteById(final String employeeEmail) {
-        logger.info("Deleting employee: " + employeeEmail);
-        if (employeeEmail == null) {
-            throw new DatabaseException("null employee email to delete");
+    public void deleteById(final String login) {
+        logger.info("Deleting employee: " + login);
+        if (login == null) {
+            throw new DatabaseException("Login is NULL");
         }
-        if (repository.existsById(employeeEmail)) {
-            repository.deleteById(employeeEmail);
-            logger.info("Employee has been deleted: " + employeeEmail);
+        if (repository.existsById(login)) {
+            repository.deleteById(login);
+            logger.info("Employee has been deleted: " + login);
         } else {
-            throw new DatabaseException("No employee with email " + employeeEmail);
+            throw new DatabaseException("No employee with login " + login);
         }
+    }
+
+    @Override
+    public boolean existsById(final String login) {
+        if (login == null) {
+            throw new DatabaseException("Login is NULL");
+        }
+        logger.info("Looking for Employee with login: " + login);
+        return repository.existsById(login);
     }
 
     @Override

@@ -65,6 +65,15 @@ public class CathedraServiceImpl implements CathedraService {
     }
 
     @Override
+    public boolean existsById(final String title) {
+        if (title == null) {
+            throw new DatabaseException("Cathedra title is NULL");
+        }
+        logger.info("Looking for Cathedra with title: " + title);
+        return repository.existsById(title);
+    }
+
+    @Override
     public void deleteAll() {
         repository.deleteAll();
     }
