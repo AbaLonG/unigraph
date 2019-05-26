@@ -24,8 +24,16 @@ public class RegisterController {
     }
 
     @GetMapping
-    public ModelAndView showPage() {
-        return new ModelAndView("register", "employee", new Employee());
+    public ModelAndView showPage(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        final Object userAttribute = request.getSession().getAttribute("user");
+        if (userAttribute != null) {
+            modelAndView.setViewName("redirect:/index");
+            return modelAndView;
+        }
+        modelAndView.addObject("employee", new Employee());
+        modelAndView.setViewName("register");
+        return modelAndView;
     }
 
     @PostMapping
