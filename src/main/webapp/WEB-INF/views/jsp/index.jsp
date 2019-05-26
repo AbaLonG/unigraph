@@ -15,6 +15,9 @@
     <c:if test="${sessionScope.get('user') != null}">
         <h2>Session user is ${sessionScope.get('user').login}</h2>
     </c:if>
+    <form:form method="post" action="${pageContext.request.contextPath}/settings/logout">
+        <input type="submit" value="Log Out">
+    </form:form>
 </div>
 </body>
 </html>

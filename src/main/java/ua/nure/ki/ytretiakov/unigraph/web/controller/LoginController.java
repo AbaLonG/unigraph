@@ -27,9 +27,9 @@ public class LoginController {
     }
 
     @GetMapping
-    public ModelAndView showPage(final HttpServletRequest request) {
+    public ModelAndView showPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        final Object userAttribute = request.getSession().getAttribute("user");
+        Object userAttribute = request.getSession().getAttribute("user");
         if (userAttribute != null) {
             Employee user = (Employee) userAttribute;
             modelAndView.setViewName("redirect:/index");
