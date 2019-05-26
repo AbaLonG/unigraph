@@ -3,8 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Unigrah</title>
-    <link rel="stylesheet" href="../../../resources/css/common.css">
+    <title>Unigraph</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -20,7 +19,7 @@
                     <form:form class="form-signin" method="post" modelAttribute="employee"
                                action="${pageContext.request.contextPath}/login">
                         <div class="form-label-group">
-                            <form:input path="login" id="inputEmal" cssClass="form-control"/>
+                            <form:input path="login" id="inputLogin" cssClass="form-control"/>
                         </div>
                         <div class="form-label-group">
                             <form:password path="password" id="inputPassword" cssClass="form-control"/>
@@ -28,7 +27,8 @@
                         <button class="btn btn-sm btn-primary btn-block text-uppercase" type="submit">Sign in</button>
                     </form:form>
                     <form method="get" action="${pageContext.request.contextPath}/register">
-                        <button class="btn btn-sm btn-secondary btn-block text-uppercase" type="submit">Register</button>
+                        <button class="btn btn-sm btn-outline-primary btn-block text-uppercase" type="submit">Register
+                        </button>
                     </form>
                 </div>
             </div>
