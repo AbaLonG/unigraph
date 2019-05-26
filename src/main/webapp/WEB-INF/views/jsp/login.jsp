@@ -13,12 +13,13 @@
 <div>
     <h1>Login</h1>
     <form:form method="post" action="${pageContext.request.contextPath}/login" modelAttribute="employee">
-        <form:label path="email">Email</form:label>
-        <form:input path="email"/>
+        <form:label path="login">Login</form:label>
+        <form:input path="login"/>
         <form:label path="password">Password</form:label>
         <form:password path="password"/>
         <input type="submit" value="Log in">
     </form:form>
+    <a href="${pageContext.request.contextPath}/register">Register</a>
 </div>
 </body>
 </html>

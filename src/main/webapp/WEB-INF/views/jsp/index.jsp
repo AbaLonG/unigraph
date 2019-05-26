@@ -11,7 +11,10 @@
 </head>
 <body>
 <div>
-    <h1>Hello ${employee.email}</h1>
+    <h1>${employee.login}'s page</h1>
+    <c:if test="${sessionScope.get('user') != null}">
+        <h2>Session user is ${sessionScope.get('user').login}</h2>
+    </c:if>
 </div>
 </body>
 </html>

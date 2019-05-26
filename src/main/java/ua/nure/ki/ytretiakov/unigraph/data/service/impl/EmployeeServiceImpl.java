@@ -76,7 +76,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new DatabaseException("Login is NULL");
         }
         logger.info("Looking for Employee with login: " + login);
-        return repository.existsById(login);
+        final boolean existsById = repository.existsById(login);
+        logger.info("Employee " + (existsById ? "exists." : "does not exist."));
+        return existsById;
     }
 
     @Override
