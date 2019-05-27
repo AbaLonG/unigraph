@@ -45,7 +45,7 @@ public class RegisterController {
         } else {
             employeeService.save(employee);
             request.getSession().setAttribute("user", employee);
-            modelAndView.setViewName("forward:/index");
+            modelAndView.setViewName("redirect:/index");
             return modelAndView;
         }
     }

@@ -1,6 +1,7 @@
 package ua.nure.ki.ytretiakov.unigraph.data.model;
 
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
+import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.GenderType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +10,8 @@ import java.util.Date;
 @Table(name = "EMPLOYEES")
 public class Employee {
 
-    @Id @Column(nullable = false, unique = true)
+    @Id
+    @Column(nullable = false, unique = true)
     private String login;
 
     @Column(nullable = false, unique = true)
@@ -21,19 +23,25 @@ public class Employee {
     @Column
     private String lastName;
 
-    @Column @Temporal(TemporalType.DATE)
+    @Column
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     @Column(nullable = false)
     private String password;
 
-    @Column @Enumerated(EnumType.STRING)
+    @Column
+    @Enumerated(EnumType.STRING)
     private EmployeeType type;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private GenderType genderType = GenderType.Male;
 
     @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
 
-    public Employee(final String login, final String email,  final String password, final String firstName, final String lastName, final Date dateOfBirth, final EmployeeType type) {
+    public Employee(final String login, final String email, final String password, final String firstName, final String lastName, final Date dateOfBirth, final EmployeeType type) {
         this.login = login;
         this.email = email;
         this.password = password;
@@ -41,6 +49,11 @@ public class Employee {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.type = type;
+    }
+
+    public Employee(final String login, final String email, final String password, final String firstName, final String lastName, final Date dateOfBirth, final EmployeeType type, final GenderType genderType) {
+        this(login, email, password, firstName, lastName, dateOfBirth, type);
+        this.genderType = genderType;
     }
 
     public Employee() {
@@ -59,55 +72,63 @@ public class Employee {
         return firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public EmployeeType getType() {
-        return type;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public EmployeeType getType() {
+        return type;
     }
 
     public void setType(EmployeeType type) {
         this.type = type;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public GenderType getGenderType() {
+        return genderType;
+    }
+
+    public void setGenderType(GenderType genderType) {
+        this.genderType = genderType;
     }
 }
