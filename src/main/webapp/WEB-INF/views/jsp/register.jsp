@@ -131,7 +131,7 @@
 
     .form-label-group input {
         height: auto;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
     }
 
     .form-label-group > input,
