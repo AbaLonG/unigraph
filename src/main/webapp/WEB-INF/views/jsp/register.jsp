@@ -71,6 +71,21 @@
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md-2">
+                                <label>Gender</label>
+                            </div>
+                            <div class="col-md">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <form:radiobutton path="genderType" id="customRadio5" cssClass="custom-control-input" value="Male"/>
+                                    <label class="custom-control-label" for="customRadio5">Male</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <form:radiobutton path="genderType" id="customRadio6" cssClass="custom-control-input" value="Female"/>
+                                    <label class="custom-control-label" for="customRadio6">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
                                 <label for="inputDateOfBirth">Date Of Birth</label>
                             </div>
                             <div class="col-md">
