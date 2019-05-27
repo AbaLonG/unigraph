@@ -39,13 +39,13 @@ public class RegisterController {
     @PostMapping
     public ModelAndView registerEmployee(@ModelAttribute("employee") Employee employee, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        if (employeeService.existsById(employee.getLogin())) {
+        if (employeeService.employeeExists(employee.getLogin(), employee.getEmail())) {
             modelAndView.setViewName("register");
             return modelAndView;
         } else {
             employeeService.save(employee);
             request.getSession().setAttribute("user", employee);
-            modelAndView.setViewName("redirect:/index");
+            modelAndView.setViewName("forward:/index");
             return modelAndView;
         }
     }

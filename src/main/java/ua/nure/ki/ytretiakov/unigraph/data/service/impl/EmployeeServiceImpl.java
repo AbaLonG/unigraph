@@ -82,6 +82,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public boolean employeeExists(String login, String email) {
+        if (login == null || email == null) {
+            throw new DatabaseException("Null parameter");
+        }
+        boolean existsById = existsById(login);
+        boolean existsByEmail = existsByEmail(email);
+        return existsById || existsByEmail;
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        if (email == null) {
+            throw new DatabaseException("Login is NULL");
+        }
+        logger.info("Looking for Employee with email: " + email);
+        final boolean existsById = repository.existsByEmail(email);
+        logger.info("Employee " + (existsById ? "exists." : "does not exist."));
+        return existsById;
+    }
+
+    @Override
     public void deleteAll() {
         logger.info("Deleting all employees");
         repository.deleteAll();

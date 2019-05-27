@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
@@ -13,7 +12,6 @@ import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/index")
 public class IndexController {
 
     private final static Logger logger = Logger.getLogger(IndexController.class);
@@ -25,7 +23,7 @@ public class IndexController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping
+    @GetMapping({"/", "/index"})
     public ModelAndView index(HttpServletRequest request) {
         Object userAttribute = request.getSession().getAttribute("user");
         if (userAttribute == null) {
@@ -36,7 +34,7 @@ public class IndexController {
         }
     }
 
-    @GetMapping(params = "id")
+    @GetMapping(value = "/index", params = "id")
     public ModelAndView showPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         Object userAttribute = request.getSession().getAttribute("user");
