@@ -2,16 +2,34 @@
 <html>
 <head>
     <title>Unigraph</title>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
 </head>
 <body style="background-color: ghostwhite">
-<div class="container">
-    <nav class="navbar navbar-expand-sm bg-primary text-white">
+<nav class="navbar navbar-expand-sm bg-primary rounded-bottom">
+    <a class="navbar-brand shadow-sm font-weight-light" href="${pageContext.request.contextPath}/index">Unigraph</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <form action="${pageContext.request.contextPath}/settings/logout" method="post">
+                    <button type="submit" class="btn-sm btn-light" value="Log Out"></button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    </nav>
+<div class="container" style="margin-top:30px">
     <div class="row">
         <div class="col-sm-4">
             <div class="fakeimg">Fake Image</div>
