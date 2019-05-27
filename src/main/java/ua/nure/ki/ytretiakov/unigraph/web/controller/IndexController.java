@@ -28,27 +28,38 @@ public class IndexController {
         Object userAttribute = request.getSession().getAttribute("user");
         if (userAttribute == null) {
             return new ModelAndView("redirect:/login");
+        }
+        Employee user = (Employee) userAttribute;
+        if (!employeeService.existsById(user.getLogin())) {
+            return new ModelAndView("redirect:/login");
         } else {
-            Employee user = (Employee) userAttribute;
+            user = refreshUser(user.getLogin());
+            request.getSession().setAttribute("user", user);
             return new ModelAndView("redirect:/index?id=" + user.getLogin());
         }
+    }
+
+    private Employee refreshUser(String login) {
+        return employeeService.findById(login);
     }
 
     @GetMapping(value = "/index", params = "id")
     public ModelAndView showPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         Object userAttribute = request.getSession().getAttribute("user");
-        if (userAttribute != null) {
-            Employee user = (Employee) userAttribute;
-            if (user.getLogin().equals(id)) {
-                modelAndView.addObject("employee", user);
-                modelAndView.setViewName("index");
-                return modelAndView;
-            }
-        }
         boolean idExists = employeeService.existsById(id);
         if (idExists) {
-            modelAndView.addObject("employee", employeeService.findById(id));
+            if (userAttribute != null) {
+                Employee user = (Employee) userAttribute;
+                if (user.getLogin().equals(id)) {
+                    user = employeeService.findById(id);
+                    request.getSession().setAttribute("user", user);
+                    modelAndView.addObject("employee", user);
+                    modelAndView.setViewName("index");
+                }
+            }
+            Employee user = employeeService.findById(id);
+            modelAndView.addObject("employee", user);
             modelAndView.setViewName("index");
             return modelAndView;
         } else {

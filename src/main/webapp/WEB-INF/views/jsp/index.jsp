@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="text/html">
 <head>
@@ -32,8 +33,14 @@
         <div class="col-sm-4">
             <div class="card border-0" style="background-color: ghostwhite">
                 <a href="#">
-                    <img class="card-img-top rounded-lg" src="resources/img/img_avatar_man.png"
-                         alt="Card image">
+                    <c:if test="${employee.genderType.name().equalsIgnoreCase('male')}">
+                        <img class="card-img-top rounded-lg" src="resources/img/img_avatar_man.png"
+                             alt="Card image">
+                    </c:if>
+                    <c:if test="${employee.genderType.name().equalsIgnoreCase('female')}">
+                        <img class="card-img-top rounded-lg" src="resources/img/img_avatar_woman.png"
+                             alt="Card image">
+                    </c:if>
                 </a>
                 <div class="card-body">
                     <h4 class="card-title">${employee.firstName} ${employee.lastName}</h4>
