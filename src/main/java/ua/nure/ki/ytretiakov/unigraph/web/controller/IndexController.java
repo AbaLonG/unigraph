@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ua.nure.ki.ytretiakov.unigraph.data.exception.DatabaseException;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
+import ua.nure.ki.ytretiakov.unigraph.util.UnigraphUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
@@ -75,24 +77,40 @@ public class IndexController {
     }
 
     @PostMapping("/index/updatePicture")
-    public String updatePicture(@RequestParam("customFile") MultipartFile file, HttpServletRequest request) {
+    public ModelAndView updatePicture(@RequestParam("customFile") MultipartFile file, HttpServletRequest request) {
+        final ModelAndView modelAndView = new ModelAndView();
+        Object userAttribute = request.getSession().getAttribute("user");
         try {
-            if (file != null && !file.isEmpty()) {
-                final byte[] bytes = file.getBytes();
-                String rootPath = "C:\\Users\\Public\\Documents\\temp";
-                File dir = new File(rootPath + File.separator + "loadFiles");
+            if (file != null && !file.isEmpty() && userAttribute != null) {
+                File dir = new File("C:\\Users\\Public\\Documents\\temp" + File.separator + "loadFiles");
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                String hashFileName = UnigraphUtils.hashFileName(file.getBytes(), UnigraphUtils.getFormatFromName(file.getOriginalFilename()));
+                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + hashFileName);
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
+                stream.write(file.getBytes());
                 stream.flush();
                 stream.close();
+                Employee user = (Employee) userAttribute;
+                user = employeeService.findById(user.getLogin());
+                if (user == null) {
+                    request.getSession().removeAttribute("user");
+                    modelAndView.setViewName("redirect:/login");
+                    return modelAndView;
+                } else {
+                    user.setPathToAvatar(uploadedFile.getAbsolutePath().replace('\\', '/'));
+                    employeeService.save(user);
+                    user = employeeService.findById(user.getLogin());
+                    request.getSession().setAttribute("user", user);
+                    modelAndView.setViewName("index");
+                    modelAndView.addObject("employee", user);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            modelAndView.setViewName("redirect:/index");
         }
-        return "redirect:/index";
+        return modelAndView;
     }
 }
