@@ -21,15 +21,21 @@ public class SettingsController {
     @PostMapping("/{command}")
     public String logOut(@PathVariable("command") String command, HttpServletRequest request) {
         return request.getSession().getAttribute("user") == null ?
-                "redirect:/login" : executeCommand(command, request.getSession());
+                "redirect:/login" : executeCommand(command, request);
     }
 
-    private String executeCommand(String command, HttpSession session) {
+    private String executeCommand(String command, HttpServletRequest request) {
         if ("logout".equals(command)) {
-            session.removeAttribute("user");
+            request.getSession().removeAttribute("user");
             return "redirect:/login";
+        } else if ("updatePicture".equals(command)) {
+            return proceedUpdatePicture(request);
         } else {
             return "redirect:/index";
         }
+    }
+
+    private String proceedUpdatePicture(HttpServletRequest request) {
+        return "redirect:/index";
     }
 }

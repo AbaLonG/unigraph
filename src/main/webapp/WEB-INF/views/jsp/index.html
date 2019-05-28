@@ -54,10 +54,25 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    Modal body..
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <form class="form">
+                                        <div class="row m-0">
+                                            <div class="col-9 pr-0">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="customFile">
+                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                </div>
+                                            </div>
+                                            <div class="col pl-4 pr-0">
+                                                <input type="button" class="btn btn-primary" value="Upload">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <script>
+                                        $(".custom-file-input").on("change", function() {
+                                            var fileName = $(this).val().split("\\").pop();
+                                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>

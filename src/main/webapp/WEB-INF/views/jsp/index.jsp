@@ -28,7 +28,7 @@
                     <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Link 3</a>
                     <form method="post" class="p-0 m-0 ml-auto"
                           action="${pageContext.request.contextPath}/settings/logout">
-                        <button type="submit" class="btn btn-sm btn-light text-primary">Log Out</button>
+                        <button type="submit" class="btn btn-sm text-white">Log Out</button>
                     </form>
                 </div>
             </div>
@@ -65,10 +65,29 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    Modal body..
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <form method="post"
+                                          action="${pageContext.request.contextPath}/settings/updatePicture">
+                                        <div class="row m-0">
+                                            <div class="col-9 pr-0">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" name="customFile"
+                                                           id="customFile" accept="image/jpeg,image/png"
+                                                           enctype="multipart/form-data">
+                                                    <label class="custom-file-label" for="customFile">Choose
+                                                        file</label>
+                                                </div>
+                                            </div>
+                                            <div class="col pl-4 pr-0">
+                                                <input type="submit" class="btn btn-primary" value="Upload">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <script>
+                                        $(".custom-file-input").on("change", function () {
+                                            var fileName = $(this).val();
+                                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>
