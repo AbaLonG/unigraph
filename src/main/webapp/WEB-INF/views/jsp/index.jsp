@@ -65,14 +65,13 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post"
-                                          action="${pageContext.request.contextPath}/settings/updatePicture">
+                                    <form method="post" enctype="multipart/form-data"
+                                          action="${pageContext.request.contextPath}/index/updatePicture">
                                         <div class="row m-0">
                                             <div class="col-9 pr-0">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" name="customFile"
-                                                           id="customFile" accept="image/jpeg,image/png"
-                                                           enctype="multipart/form-data">
+                                                           id="customFile" accept="image/jpeg,image/png">
                                                     <label class="custom-file-label" for="customFile">Choose
                                                         file</label>
                                                 </div>
@@ -84,7 +83,7 @@
                                     </form>
                                     <script>
                                         $(".custom-file-input").on("change", function () {
-                                            var fileName = $(this).val();
+                                            var fileName = $(this).val().split("\\").pop();
                                             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                                         });
                                     </script>

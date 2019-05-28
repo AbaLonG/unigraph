@@ -38,6 +38,9 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private GenderType genderType = GenderType.Male;
 
+    @Column
+    private String pathToAvatar;
+
     @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
 
@@ -130,5 +133,13 @@ public class Employee {
 
     public void setGenderType(GenderType genderType) {
         this.genderType = genderType;
+    }
+
+    public String getPathToAvatar() {
+        return pathToAvatar;
+    }
+
+    public void setPathToAvatar(String pathToAvatar) {
+        this.pathToAvatar = pathToAvatar;
     }
 }

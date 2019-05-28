@@ -4,12 +4,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Controller
 public class IndexController {
@@ -66,5 +72,27 @@ public class IndexController {
             modelAndView.setViewName("redirect:/login");
             return modelAndView;
         }
+    }
+
+    @PostMapping("/index/updatePicture")
+    public String updatePicture(@RequestParam("customFile") MultipartFile file, HttpServletRequest request) {
+        try {
+            if (file != null && !file.isEmpty()) {
+                final byte[] bytes = file.getBytes();
+                String rootPath = "C:\\Users\\Public\\Documents\\temp";
+                File dir = new File(rootPath + File.separator + "loadFiles");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                stream.write(bytes);
+                stream.flush();
+                stream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/index";
     }
 }

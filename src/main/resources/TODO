@@ -1,4 +1,5 @@
 - Add and store custom avatar (module)
+    - Get custom avatar or default avatar
 - Storing employee's friends
 - Editing employee
 - Add group
