@@ -31,25 +31,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee == null) {
             throw new DatabaseException("Employee is NULL");
         }
-        logger.info("Saving employee: " + employee.getLogin());
         if (employee.getType() == EmployeeType.Student) {
             if (employee.getGroup() == null) {
                 throw new DatabaseException("Student employee type has null group");
             }
         }
         repository.saveAndFlush(employee);
-        logger.info("Employee " + employee.getLogin() + " is saved");
     }
 
     @Override
     public Employee findById(final String login) {
-        logger.info("Looking for employee: " + login);
         if (login == null) {
             throw new DatabaseException("Employee email is NULL");
         }
         final Optional<Employee> byId = repository.findById(login);
         if (byId.isPresent()) {
-            logger.info("Employee with login " + login + " is found");
             return byId.get();
         } else {
             throw new DatabaseException("No employee with such login" + login);
@@ -58,13 +54,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteById(final String login) {
-        logger.info("Deleting employee: " + login);
         if (login == null) {
             throw new DatabaseException("Login is NULL");
         }
         if (repository.existsById(login)) {
             repository.deleteById(login);
-            logger.info("Employee has been deleted: " + login);
         } else {
             throw new DatabaseException("No employee with login " + login);
         }
@@ -75,7 +69,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (login == null) {
             throw new DatabaseException("Login is NULL");
         }
-        logger.info("Looking for Employee with login: " + login);
         final boolean existsById = repository.existsById(login);
         logger.info("Employee " + (existsById ? "exists." : "does not exist."));
         return existsById;
@@ -96,7 +89,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (email == null) {
             throw new DatabaseException("Login is NULL");
         }
-        logger.info("Looking for Employee with email: " + email);
         final boolean existsById = repository.existsByEmail(email);
         logger.info("Employee " + (existsById ? "exists." : "does not exist."));
         return existsById;
