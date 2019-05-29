@@ -13,7 +13,7 @@
 </head>
 <body style="background-color: ghostwhite">
 <div class="container">
-    <nav class="navbar navbar-expand-sm p-1"
+    <nav class="navbar navbar-expand-sm p-0"
          style="border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem; background: linear-gradient(to bottom, #1448b4, #4d7acd);">
         <div class="row align-items-center w-100">
             <div class="col-sm-2">
@@ -35,7 +35,7 @@
         </div>
     </nav>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card border-0" style="background-color: ghostwhite">
                 <div class="p-0 m-0 mh-100 mw-100">
                     <img class="card-img-top p-0 m-0" src="resources/img/${avatarTitle}"
@@ -61,7 +61,8 @@
                     <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && userFriends.contains(employee)}">
                         <form class="p-0 m-0" method="post"
                               action="${pageContext.request.contextPath}/index/unsubscribe?id=${employee.login}">
-                            <input type="submit" class="btn btn-block btn-sm btn-primary mt-0" value="Remove from friends"
+                            <input type="submit" class="btn btn-block btn-sm btn-primary mt-0"
+                                   value="Remove from friends"
                                    style="border-radius: 0 0 0.5rem 0.5rem;">
                         </form>
                     </c:if>
@@ -102,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-9 border-left">
         </div>
     </div>
 </div>
