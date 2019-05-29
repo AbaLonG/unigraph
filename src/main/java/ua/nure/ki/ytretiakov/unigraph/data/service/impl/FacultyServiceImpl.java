@@ -13,7 +13,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.service.FacultyService;
 import java.util.Optional;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
+//@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
 public class FacultyServiceImpl implements FacultyService {
 
     private static Logger logger = Logger.getLogger(FacultyServiceImpl.class);

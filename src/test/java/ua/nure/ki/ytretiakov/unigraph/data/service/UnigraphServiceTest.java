@@ -1,6 +1,7 @@
 package ua.nure.ki.ytretiakov.unigraph.data.service;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +11,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
+import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.GenderType;
 
 import java.util.Date;
 
@@ -35,8 +37,10 @@ public class UnigraphServiceTest extends WebContextLoader {
         jdbcTemplate.execute("DROP TABLE public.groups CASCADE");
         jdbcTemplate.execute("DROP TABLE public.cathedras CASCADE");
         jdbcTemplate.execute("DROP TABLE public.faculties CASCADE");
+        jdbcTemplate.execute("DROP TABLE public.employees_employees CASCADE");
     }
 
+    @Ignore
     @Test
     public void testUnigraphService() {
         saveEmployeeGroupCathedraFaculty();
@@ -77,5 +81,18 @@ public class UnigraphServiceTest extends WebContextLoader {
         s1.setGroup(group);
         service.getEmployeeService().save(s1);
         assertEquals(KI_3, service.getEmployeeService().findById(s1.getEmail()).getGroup().getTitle());
+    }
+
+    @Test
+    public void testAddFriends() {
+        Employee employee = new Employee(DEAN, DEAN, DEAN, DEAN, DEAN, new Date(), EmployeeType.Teacher, GenderType.Male);
+        Employee s1 = new Employee(S1, S1, S1, S1, S1, new Date(), EmployeeType.Student);
+        Employee s2 = new Employee(S2, S2, S2, S2, S2, new Date(), EmployeeType.Student);
+        Employee s3 = new Employee(S3, S3, S3, S3, S3, new Date(), EmployeeType.Student);
+        service.getEmployeeService().save(employee);
+        employee = service.getEmployeeService().findById(employee.getLogin());
+        service.getEmployeeService().addFriend(employee.getLogin(), s1, s2, s3);
+        assertNotNull(employee.getFriends());
+        assertEquals(3, employee.getFriends().size());
     }
 }

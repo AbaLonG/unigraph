@@ -5,6 +5,8 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.GenderType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "EMPLOYEES")
@@ -39,10 +41,13 @@ public class Employee {
     private GenderType genderType = GenderType.Male;
 
     @Column
-    private String pathToAvatar;
+    private String avatarFile;
 
     @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
+
+    @ManyToMany(targetEntity = Employee.class, cascade = CascadeType.ALL)
+    private List<Employee> friends;
 
     public Employee(final String login, final String email, final String password, final String firstName, final String lastName, final Date dateOfBirth, final EmployeeType type) {
         this.login = login;
@@ -135,11 +140,41 @@ public class Employee {
         this.genderType = genderType;
     }
 
-    public String getPathToAvatar() {
-        return pathToAvatar;
+    public String getAvatarFile() {
+        return avatarFile;
     }
 
-    public void setPathToAvatar(String pathToAvatar) {
-        this.pathToAvatar = pathToAvatar;
+    public void setAvatarFile(String avatarFile) {
+        this.avatarFile = avatarFile;
+    }
+
+    public List<Employee> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Employee> friends) {
+        this.friends = friends;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getLogin().equals(employee.getLogin()) &&
+                getEmail().equals(employee.getEmail()) &&
+                getFirstName().equals(employee.getFirstName()) &&
+                getLastName().equals(employee.getLastName()) &&
+                getDateOfBirth().equals(employee.getDateOfBirth()) &&
+                getPassword().equals(employee.getPassword()) &&
+                getType() == employee.getType() &&
+                getGenderType() == employee.getGenderType() &&
+                Objects.equals(getAvatarFile(), employee.getAvatarFile()) &&
+                Objects.equals(getGroup(), employee.getGroup());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLogin());
     }
 }

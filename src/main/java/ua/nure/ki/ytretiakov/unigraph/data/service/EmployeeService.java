@@ -7,4 +7,6 @@ public interface EmployeeService extends Service<Employee, String> {
     boolean employeeExists(String login, String email);
 
     boolean existsByEmail(String email);
+
+    void addFriend(String login, Employee ... friends);
 }

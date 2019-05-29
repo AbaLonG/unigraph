@@ -13,7 +13,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.service.GroupService;
 import java.util.Optional;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
+//@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
 public class GroupServiceImpl implements GroupService {
 
     private static Logger logger = Logger.getLogger(GroupServiceImpl.class);

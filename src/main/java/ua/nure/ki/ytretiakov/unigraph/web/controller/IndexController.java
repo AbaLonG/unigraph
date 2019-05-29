@@ -62,12 +62,15 @@ public class IndexController {
             }
             modelAndView.addObject("employee", user);
             modelAndView.addObject("avatarTitle", getAvatarForEmployee(user));
+            modelAndView.addObject("friends", user.getFriends());
+            if (userAttribute != null) {
+                modelAndView.addObject("userFriends", ((Employee) userAttribute).getFriends());
+            }
             modelAndView.setViewName("index");
-            return modelAndView;
         } else {
             modelAndView.setViewName("redirect:/login");
-            return modelAndView;
         }
+        return modelAndView;
     }
 
     private boolean pageOfSessionUser(String requestId, Object userAttribute) {
@@ -75,9 +78,9 @@ public class IndexController {
     }
 
     private String getAvatarForEmployee(Employee user) {
-        File avatar = new File(UPLOAD_PATH + File.separator + user.getPathToAvatar());
+        File avatar = new File(UPLOAD_PATH + File.separator + user.getAvatarFile());
         if (avatar.exists()) {
-            return user.getPathToAvatar();
+            return user.getAvatarFile();
         } else {
             return user.getGenderType() == GenderType.Female ? WOMAN_AVATAR_IMAGE : MAN_AVATAR_IMAGE;
         }
@@ -106,7 +109,7 @@ public class IndexController {
                     modelAndView.setViewName("redirect:/login");
                     return modelAndView;
                 } else {
-                    user.setPathToAvatar(hashFileName);
+                    user.setAvatarFile(hashFileName);
                     employeeService.save(user);
                     user = employeeService.findById(user.getLogin());
                     request.getSession().setAttribute("user", user);
@@ -117,5 +120,40 @@ public class IndexController {
             logger.info("Error during avatar uploading", e);
         }
         return modelAndView;
+    }
+
+    @PostMapping(value = "/index/subscribe", params = "id")
+    public String subscribe(@RequestParam String id, HttpServletRequest request) {
+        Object sessionUser = request.getSession().getAttribute("user");
+        if (sessionUser != null) {
+            Employee user = (Employee) sessionUser;
+            if (employeeService.existsById(id)) {
+                Employee toAdd = employeeService.findById(id);
+                if (employeeService.existsById(user.getLogin())) {
+                    user = employeeService.findById(user.getLogin());
+                    employeeService.addFriend(user.getLogin(), toAdd);
+                    request.getSession().setAttribute("user", user);
+                }
+            }
+        }
+        return "redirect:/index?id=" + id;
+    }
+
+    @PostMapping(value = "/index/unsubscribe", params = "id")
+    public String unsubscribe(@RequestParam String id, HttpServletRequest request) {
+        Object sessionUser = request.getSession().getAttribute("user");
+        if (sessionUser != null) {
+            Employee user = (Employee) sessionUser;
+            if (employeeService.existsById(id)) {
+                Employee toRemove = employeeService.findById(id);
+                if (employeeService.existsById(user.getLogin())) {
+                    user = employeeService.findById(user.getLogin());
+                    user.getFriends().remove(toRemove);
+                    employeeService.save(user);
+                    request.getSession().setAttribute("user", employeeService.findById(user.getLogin()));
+                }
+            }
+        }
+        return "redirect:/index?id=" + id;
     }
 }

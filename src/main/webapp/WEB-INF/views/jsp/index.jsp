@@ -37,10 +37,10 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="card border-0" style="background-color: ghostwhite">
-                <a href="#">
-                    <img class="card-img-top" src="resources/img/${avatarTitle}"
+                <div class="p-0 m-0 mh-100 mw-100">
+                    <img class="card-img-top p-0 m-0" src="resources/img/${avatarTitle}"
                          alt="Card image" style="border-radius: 0.5rem 0.5rem 0 0;">
-                </a>
+                </div>
                 <div class="card-body p-0">
                     <div class="w-100 bg-primary text-center text-white pointer p-1"
                          style="font-family: 'Segoe UI', sans-serif; font-size: 1.25rem">${employee.firstName} ${employee.lastName}
@@ -50,6 +50,20 @@
                                 data-target="#changeAvatar" style="border-radius: 0 0 0.5rem 0.5rem;">
                             Cange Profile Picture
                         </button>
+                    </c:if>
+                    <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && !userFriends.contains(employee)}">
+                        <form class="p-0 m-0" method="post"
+                              action="${pageContext.request.contextPath}/index/subscribe?id=${employee.login}">
+                            <input type="submit" class="btn btn-block btn-sm btn-primary mt-0" value="Add a friend"
+                                   style="border-radius: 0 0 0.5rem 0.5rem;">
+                        </form>
+                    </c:if>
+                    <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && userFriends.contains(employee)}">
+                        <form class="p-0 m-0" method="post"
+                              action="${pageContext.request.contextPath}/index/unsubscribe?id=${employee.login}">
+                            <input type="submit" class="btn btn-block btn-sm btn-primary mt-0" value="Remove from friends"
+                                   style="border-radius: 0 0 0.5rem 0.5rem;">
+                        </form>
                     </c:if>
                     <div class="modal" id="changeAvatar">
                         <div class="modal-dialog">
@@ -89,31 +103,11 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <h2>TITLE HEADING</h2>
-            <h5>Title description, Dec 7, 2017</h5>
-            <div class="fakeimg">Fake Image</div>
-            <p>Some text..</p>
-            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco.</p>
-            <br>
-            <h2>TITLE HEADING</h2>
-            <h5>Title description, Sep 2, 2017</h5>
-            <div class="fakeimg">Fake Image</div>
-            <p>Some text..</p>
-            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco.</p>
         </div>
     </div>
 </div>
 </body>
 <style>
-    .fakeimg {
-        height: 200px;
-        background-color: #aaa;
-    }
-
     .links {
         color: #ffffff;
         font-size: 1rem;

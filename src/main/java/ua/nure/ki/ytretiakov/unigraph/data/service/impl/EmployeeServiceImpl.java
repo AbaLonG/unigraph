@@ -3,8 +3,6 @@ package ua.nure.ki.ytretiakov.unigraph.data.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import ua.nure.ki.ytretiakov.unigraph.data.exception.DatabaseException;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
@@ -14,7 +12,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
 import java.util.Optional;
 
 @Service
-@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
+//@Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class)
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
@@ -92,6 +90,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         final boolean existsById = repository.existsByEmail(email);
         logger.info("Employee " + (existsById ? "exists." : "does not exist."));
         return existsById;
+    }
+
+    @Override
+    public void addFriend(String login, Employee... friends) {
+        if (!existsById(login))
+            return;
+        Employee employee = findById(login);
+        for (Employee friend : friends) {
+            employee.getFriends().remove(friend);
+            employee.getFriends().add(friend);
+        }
+        save(employee);
     }
 
     @Override
