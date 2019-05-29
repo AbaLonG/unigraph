@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import ua.nure.ki.ytretiakov.unigraph.data.exception.DatabaseException;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
 import ua.nure.ki.ytretiakov.unigraph.util.UnigraphUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -25,10 +25,12 @@ public class IndexController {
     private final static Logger logger = Logger.getLogger(IndexController.class);
 
     private EmployeeService employeeService;
+    private ServletContext servletContext;
 
     @Autowired
-    public IndexController(EmployeeService employeeService) {
+    public IndexController(EmployeeService employeeService, ServletContext servletContext) {
         this.employeeService = employeeService;
+        this.servletContext = servletContext;
     }
 
     @GetMapping({"/", "/index"})
@@ -78,17 +80,18 @@ public class IndexController {
 
     @PostMapping("/index/updatePicture")
     public ModelAndView updatePicture(@RequestParam("customFile") MultipartFile file, HttpServletRequest request) {
-        final ModelAndView modelAndView = new ModelAndView();
-        Object userAttribute = request.getSession().getAttribute("user");
+        final ModelAndView modelAndView = new ModelAndView("redirect:/index");
+        final Object userAttribute = request.getSession().getAttribute("user");
         try {
             if (file != null && !file.isEmpty() && userAttribute != null) {
-                File dir = new File("C:\\Users\\Public\\Documents\\temp" + File.separator + "loadFiles");
+                final String uploadPath = servletContext.getRealPath("/") + "resources\\" + "img";
+                final File dir = new File(uploadPath);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                String hashFileName = UnigraphUtils.hashFileName(file.getBytes(), UnigraphUtils.getFormatFromName(file.getOriginalFilename()));
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + hashFileName);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                final String hashFileName = UnigraphUtils.hashFileName(file.getBytes(), UnigraphUtils.getFormatFromName(file.getOriginalFilename()));
+                final File uploadedFile = new File(dir.getAbsolutePath() + File.separator + hashFileName);
+                final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
                 stream.write(file.getBytes());
                 stream.flush();
                 stream.close();
@@ -99,17 +102,15 @@ public class IndexController {
                     modelAndView.setViewName("redirect:/login");
                     return modelAndView;
                 } else {
-                    user.setPathToAvatar(uploadedFile.getAbsolutePath().replace('\\', '/'));
+                    user.setPathToAvatar(hashFileName);
                     employeeService.save(user);
                     user = employeeService.findById(user.getLogin());
                     request.getSession().setAttribute("user", user);
-                    modelAndView.setViewName("index");
                     modelAndView.addObject("employee", user);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            modelAndView.setViewName("redirect:/index");
+        } catch (Exception e) {
+            logger.info("Error during avatar uploading", e);
         }
         return modelAndView;
     }
