@@ -38,18 +38,8 @@
         <div class="col-sm-4">
             <div class="card border-0" style="background-color: ghostwhite">
                 <a href="#">
-                    <c:if test="${employee.pathToAvatar == null and employee.genderType.name().equalsIgnoreCase('male')}">
-                        <img class="card-img-top" src="resources/img/img_avatar_man.png"
-                             alt="Card image" style="border-radius: 0.5rem 0.5rem 0 0;">
-                    </c:if>
-                    <c:if test="${employee.pathToAvatar == null and employee.genderType.name().equalsIgnoreCase('female')}">
-                        <img class="card-img-top" src="resources/img/img_avatar_woman.png"
-                             alt="Card image" style="border-radius: 0.5rem 0.5rem 0 0;">
-                    </c:if>
-                    <c:if test="${employee.pathToAvatar != null and not empty employee.pathToAvatar}">
-                        <img class="card-img-top" src="resources/img/${employee.pathToAvatar}"
-                             alt="Card image" style="border-radius: 0.5rem 0.5rem 0 0;">
-                    </c:if>
+                    <img class="card-img-top" src="resources/img/${avatarTitle}"
+                         alt="Card image" style="border-radius: 0.5rem 0.5rem 0 0;">
                 </a>
                 <div class="card-body p-0">
                     <div class="w-100 bg-primary text-center text-white pointer p-1"
