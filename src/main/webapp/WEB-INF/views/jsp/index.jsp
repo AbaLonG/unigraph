@@ -14,7 +14,7 @@
 <body style="background-color: ghostwhite">
 <div class="container">
     <nav class="navbar navbar-expand-sm p-0"
-         style="border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem; background: linear-gradient(to bottom, #1448b4, #4d7acd);">
+         style="border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0; background: linear-gradient(to bottom, #1448b4, #285ebe);">
         <div class="row align-items-center w-100">
             <div class="col-sm-2">
                 <a href="${pageContext.request.contextPath}/index"
@@ -23,9 +23,9 @@
             </div>
             <div class="col-sm pr-1">
                 <div class="d-flex text-white align-items-center">
-                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Link 1</a>
-                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Link 2</a>
-                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Link 3</a>
+                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">University</a>
+                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Settings</a>
+                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Search</a>
                     <form method="post" class="p-0 m-0 ml-auto"
                           action="${pageContext.request.contextPath}/settings/logout">
                         <button type="submit" class="btn btn-sm text-white">Log Out</button>
@@ -104,11 +104,11 @@
             </div>
         </div>
         <div class="col-sm-9 p-0">
-            <div class="card" style="border-radius: 0 0.5rem 0.5rem 0.5rem">
-                <div class="card-header pl-3 pb-0">
+            <div class="card" style="border-radius: 0 0 0 0; border-top: 0; border-right: 0">
+                <div class="card-header pl-3 pb-2 rounded-0 text-white" style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
                     <h5>${employee.firstName} ${employee.lastName}</h5>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body p-0 border-right">
                     <table class="table table-striped table-hover m-0 pl-5">
                         <tbody>
                         <tr>
