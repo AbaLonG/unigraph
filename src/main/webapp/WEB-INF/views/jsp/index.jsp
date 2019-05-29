@@ -34,8 +34,8 @@
             </div>
         </div>
     </nav>
-    <div class="row">
-        <div class="col-sm-3">
+    <div class="row mw-100 p-0 m-0 justify-content-between">
+        <div class="col-sm-3 p-0">
             <div class="card border-0" style="background-color: ghostwhite">
                 <div class="p-0 m-0 mh-100 mw-100">
                     <img class="card-img-top p-0 m-0" src="resources/img/${avatarTitle}"
@@ -43,7 +43,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="w-100 bg-primary text-center text-white pointer p-1"
-                         style="font-family: 'Segoe UI', sans-serif; font-size: 1.25rem">${employee.firstName} ${employee.lastName}
+                         style="font-family: 'Segoe UI', sans-serif; font-size: 1.25rem">${employee.login}
                     </div>
                     <c:if test="${employee.login.equals(sessionScope.get('user').login)}">
                         <button type="button" class="btn btn-block btn-sm btn-primary mt-0" data-toggle="modal"
@@ -103,7 +103,50 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 border-left">
+        <div class="col-sm-9 p-0">
+            <div class="card" style="border-radius: 0 0.5rem 0.5rem 0.5rem">
+                <div class="card-header pl-3 pb-0">
+                    <h5>${employee.firstName} ${employee.lastName}</h5>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped table-hover m-0 pl-5">
+                        <tbody>
+                        <tr>
+                            <td>University</td>
+                            <td>Kharkiv National University of Radioelectronics</td>
+                        </tr>
+                        <tr>
+                            <td>Faculty</td>
+                            <td>${employee.group.cathedra.faculty.title}</td>
+                        </tr>
+                        <tr>
+                            <td>Cathedra</td>
+                            <td>${employee.group.cathedra.title}</td>
+                        </tr>
+                        <tr>
+                            <td>Group</td>
+                            <td>${employee.group.title}</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>${employee.type.toString()}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>${employee.email}</td>
+                        </tr>
+                        <tr>
+                            <td>Date of birth</td>
+                            <td>${employee.dateOfBirth}</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>${employee.genderType.toString()}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
