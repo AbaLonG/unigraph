@@ -23,9 +23,9 @@
             </div>
             <div class="col-sm px-0 ml-3">
                 <div class="d-flex text-white align-items-center">
-                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">University</a>
-                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Settings</a>
-                    <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Search</a>
+                    <a class="p-0 pt-1 px-3 text-decoration-none links" href="#">Edit Profile</a>
+                    <a class="p-0 pt-1 px-3 text-decoration-none links" href="#">University</a>
+                    <a class="p-0 pt-1 px-3 text-decoration-none links" href="#">Settings</a>
                     <form method="post" class="p-0 m-0 ml-auto"
                           action="${pageContext.request.contextPath}/settings/logout">
                         <button type="submit" class="btn btn-sm text-white">Log Out</button>
@@ -42,28 +42,29 @@
                          alt="Card image">
                 </div>
                 <div class="card-body p-0">
-                    <div class="w-100 bg-primary text-center text-white pointer p-1"
-                         style="font-family: 'Segoe UI', sans-serif; font-size: 1.25rem">${employee.login}
+                    <div class="w-100 text-center text-white pointer p-1"
+                         style="font-family: 'Segoe UI', sans-serif; font-size: 1.25rem; background: linear-gradient(to bottom, #285EBE, #396dc3)">
+                        ${employee.login}
                     </div>
                     <c:if test="${employee.login.equals(sessionScope.get('user').login)}">
-                        <button type="button" class="btn btn-block btn-sm btn-primary mt-0" data-toggle="modal"
-                                data-target="#changeAvatar" style="border-radius: 0 0 0.5rem 0.5rem;">
+                        <button type="button" class="btn btn-block border-0 btn-sm btn-primary mt-0" data-toggle="modal"
+                                data-target="#changeAvatar" style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
                             Cange Profile Picture
                         </button>
                     </c:if>
                     <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && !userFriends.contains(employee)}">
                         <form class="p-0 m-0" method="post"
                               action="${pageContext.request.contextPath}/index/subscribe?id=${employee.login}">
-                            <input type="submit" class="btn btn-block btn-sm btn-primary mt-0" value="Add a friend"
-                                   style="border-radius: 0 0 0.5rem 0.5rem;">
+                            <input type="submit" class="btn btn-block border-0 btn-sm btn-primary mt-0" value="Add a friend"
+                                   style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
                         </form>
                     </c:if>
                     <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && userFriends.contains(employee)}">
                         <form class="p-0 m-0" method="post"
                               action="${pageContext.request.contextPath}/index/unsubscribe?id=${employee.login}">
-                            <input type="submit" class="btn btn-block btn-sm btn-primary mt-0"
+                            <input type="submit" class="btn btn-block border-0 btn-sm btn-primary mt-0"
                                    value="Remove from friends"
-                                   style="border-radius: 0 0 0.5rem 0.5rem;">
+                                   style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
                         </form>
                     </c:if>
                     <div class="modal" id="changeAvatar">
@@ -103,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 p-0">
+        <div class="col-sm-9 p-0 mt-3 mt-sm-0">
             <div class="card border-primary" style="border-radius: 0 0 0.5rem 0.5rem; border-top: 0; border-right: 0">
                 <div class="card-header pl-3 pb-2 rounded-0 text-white"
                      style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
@@ -155,7 +156,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="d-flex flex-row p-0 m-0 border border-top-0 border-primary"
-                         style="background-color: ghostwhite; border-radius: 0 0 0.5rem 0.5rem">
+                         style="background-color: white; border-radius: 0 0 0.5rem 0.5rem; min-height: 100px;">
                         <c:forEach var="friend" items="${fiveFriends}">
                             <div class="m-3 p-0" style="display: block">
                                 <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
