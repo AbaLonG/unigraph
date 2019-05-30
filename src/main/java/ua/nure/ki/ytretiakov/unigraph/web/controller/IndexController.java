@@ -65,6 +65,7 @@ public class IndexController {
             modelAndView.addObject("avatarTitle", getAvatarForEmployee(user));
             modelAndView.addObject("friends", user.getFriends());
             modelAndView.addObject("fiveFriends", user.getFriends().stream().limit(5).collect(Collectors.toList()));
+            modelAndView.addObject("controller", this);
             if (userAttribute != null) {
                 modelAndView.addObject("userFriends", ((Employee) userAttribute).getFriends());
             }
@@ -79,12 +80,13 @@ public class IndexController {
         return userAttribute != null && ((Employee) userAttribute).getLogin().equals(requestId);
     }
 
-    private String getAvatarForEmployee(Employee user) {
+    public String getAvatarForEmployee(Employee user) {
+        final String dir = "resources/img/";
         File avatar = new File(UPLOAD_PATH + File.separator + user.getAvatarFile());
         if (avatar.exists()) {
-            return user.getAvatarFile();
+            return dir + user.getAvatarFile();
         } else {
-            return user.getGenderType() == GenderType.Female ? WOMAN_AVATAR_IMAGE : MAN_AVATAR_IMAGE;
+            return dir + (user.getGenderType() == GenderType.Female ? WOMAN_AVATAR_IMAGE : MAN_AVATAR_IMAGE);
         }
     }
 

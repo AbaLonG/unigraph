@@ -38,7 +38,7 @@
         <div class="col-sm-3 p-0">
             <div class="card border-0" style="background-color: ghostwhite">
                 <div class="p-0 m-0 mh-100 mw-100">
-                    <img class="card-img-top p-0 m-0 rounded-0" src="resources/img/${avatarTitle}"
+                    <img class="card-img-top p-0 m-0 rounded-0" src="${controller.getAvatarForEmployee(employee)}"
                          alt="Card image">
                 </div>
                 <div class="card-body p-0">
@@ -157,11 +157,16 @@
                     <div class="d-flex flex-row p-0 m-0 border border-top-0 border-primary"
                          style="background-color: ghostwhite; border-radius: 0 0 0.5rem 0.5rem">
                         <c:forEach var="friend" items="${fiveFriends}">
-                            <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
-                                <div class="m-0 p-2"
-                                     style="max-width: 50px; max-height: 50px; width: 50px; height: 50px;">
-                                </div>
-                            </a>
+                            <div class="m-3 p-0" style="display: block">
+                                <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
+                                    <div class="rounded"
+                                         style="max-width: 100px; max-height: 100px; width: 100px; height: 100px;
+                                                 background-image: url(${controller.getAvatarForEmployee(friend)});
+                                                 background-repeat: no-repeat; background-size: cover; background-position: 50% 50%;">
+                                    </div>
+                                </a>
+                                <p class="p-0 m-0 text-center" style="font-size: 12px">${friend.login}</p>
+                            </div>
                         </c:forEach>
                     </div>
                 </div>
