@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.stream.Collectors;
 
 @Controller
 public class IndexController {
@@ -63,6 +64,7 @@ public class IndexController {
             modelAndView.addObject("employee", user);
             modelAndView.addObject("avatarTitle", getAvatarForEmployee(user));
             modelAndView.addObject("friends", user.getFriends());
+            modelAndView.addObject("fiveFriends", user.getFriends().stream().limit(5).collect(Collectors.toList()));
             if (userAttribute != null) {
                 modelAndView.addObject("userFriends", ((Employee) userAttribute).getFriends());
             }

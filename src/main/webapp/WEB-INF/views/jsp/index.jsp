@@ -14,14 +14,14 @@
 <body style="background-color: ghostwhite">
 <div class="container">
     <nav class="navbar navbar-expand-sm p-0"
-         style="border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0; background: linear-gradient(to bottom, #1448b4, #285ebe);">
+         style="border-bottom-right-radius: 0; background: linear-gradient(to bottom, #1448b4, #285ebe);">
         <div class="row align-items-center w-100">
-            <div class="col-sm-2">
+            <div class="col-sm-3 pl-3">
                 <a href="${pageContext.request.contextPath}/index"
                    class="navbar-brand text-white ml-3 font-weight-light"
                    style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif">Unigraph</a>
             </div>
-            <div class="col-sm pr-1">
+            <div class="col-sm px-0 ml-3">
                 <div class="d-flex text-white align-items-center">
                     <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">University</a>
                     <a class="p-0 pt-1 px-2 text-decoration-none links" href="#">Settings</a>
@@ -38,8 +38,8 @@
         <div class="col-sm-3 p-0">
             <div class="card border-0" style="background-color: ghostwhite">
                 <div class="p-0 m-0 mh-100 mw-100">
-                    <img class="card-img-top p-0 m-0" src="resources/img/${avatarTitle}"
-                         alt="Card image" style="border-radius: 0.5rem 0.5rem 0 0;">
+                    <img class="card-img-top p-0 m-0 rounded-0" src="resources/img/${avatarTitle}"
+                         alt="Card image">
                 </div>
                 <div class="card-body p-0">
                     <div class="w-100 bg-primary text-center text-white pointer p-1"
@@ -104,11 +104,12 @@
             </div>
         </div>
         <div class="col-sm-9 p-0">
-            <div class="card" style="border-radius: 0 0 0 0; border-top: 0; border-right: 0">
-                <div class="card-header pl-3 pb-2 rounded-0 text-white" style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
+            <div class="card border-primary" style="border-radius: 0 0 0.5rem 0.5rem; border-top: 0; border-right: 0">
+                <div class="card-header pl-3 pb-2 rounded-0 text-white"
+                     style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
                     <h5>${employee.firstName} ${employee.lastName}</h5>
                 </div>
-                <div class="card-body p-0 border-right">
+                <div class="card-body p-0 border-right border-primary" style="border-radius: 0 0 0.5rem 0.5rem">
                     <table class="table table-striped table-hover m-0 pl-5">
                         <tbody>
                         <tr>
@@ -147,19 +148,36 @@
                     </table>
                 </div>
             </div>
+            <div class="card my-5 border-0">
+                <div class="card-header pl-3 pb-2"
+                     style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
+                    <a class="text-white text-decoration-none" href="#">Friends</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="d-flex flex-row p-0 m-0 border border-top-0 border-primary"
+                         style="background-color: ghostwhite; border-radius: 0 0 0.5rem 0.5rem">
+                        <c:forEach var="friend" items="${fiveFriends}">
+                            <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
+                                <div class="m-0 p-2"
+                                     style="max-width: 50px; max-height: 50px; width: 50px; height: 50px;">
+                                </div>
+                            </a>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </body>
 <style>
     .links {
-        color: #ffffff;
+        color: #e1e1e1;
         font-size: 1rem;
     }
 
     .links:hover {
         color: white;
-        font-weight: bolder;
     }
 </style>
 </html>
