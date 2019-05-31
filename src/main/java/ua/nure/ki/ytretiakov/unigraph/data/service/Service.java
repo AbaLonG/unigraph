@@ -1,6 +1,7 @@
 package ua.nure.ki.ytretiakov.unigraph.data.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface Service<E, ID extends Serializable> {
 
@@ -13,4 +14,6 @@ public interface Service<E, ID extends Serializable> {
     void deleteAll();
 
     boolean existsById(ID id);
+
+    List<E> findAll();
 }

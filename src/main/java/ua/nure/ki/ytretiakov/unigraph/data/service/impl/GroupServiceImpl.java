@@ -10,6 +10,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 import ua.nure.ki.ytretiakov.unigraph.data.repository.GroupRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.service.GroupService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -73,6 +74,11 @@ public class GroupServiceImpl implements GroupService {
         }
         logger.info("Looking for Group with title: " + title);
         return repository.existsById(title);
+    }
+
+    @Override
+    public List<Group> findAll() {
+        return repository.findAll();
     }
 
     @Override

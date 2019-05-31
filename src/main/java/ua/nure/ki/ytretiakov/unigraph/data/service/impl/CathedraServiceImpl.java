@@ -10,6 +10,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.repository.CathedraRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.service.CathedraService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,6 +72,11 @@ public class CathedraServiceImpl implements CathedraService {
         }
         logger.info("Looking for Cathedra with title: " + title);
         return repository.existsById(title);
+    }
+
+    @Override
+    public List<Cathedra> findAll() {
+        return repository.findAll();
     }
 
     @Override

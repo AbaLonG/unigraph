@@ -9,6 +9,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
 import ua.nure.ki.ytretiakov.unigraph.data.repository.EmployeeRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -102,6 +103,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.getFriends().add(friend);
         }
         save(employee);
+    }
+
+    @Override
+    public List<Employee> findAll() {
+        return repository.findAll();
     }
 
     @Override

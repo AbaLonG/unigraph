@@ -10,6 +10,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.repository.FacultyRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.service.FacultyService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -71,6 +72,11 @@ public class FacultyServiceImpl implements FacultyService {
         }
         logger.info("Looking for Faculty with title: " + title);
         return repository.existsById(title);
+    }
+
+    @Override
+    public List<Faculty> findAll() {
+        return repository.findAll();
     }
 
     @Override

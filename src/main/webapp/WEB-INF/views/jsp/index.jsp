@@ -13,27 +13,7 @@
 </head>
 <body style="background-color: ghostwhite">
 <div class="container">
-    <nav class="navbar navbar-expand-sm p-0"
-         style="border-bottom-right-radius: 0; background: linear-gradient(to bottom, #1448b4, #285ebe);">
-        <div class="row align-items-center w-100">
-            <div class="col-sm-3 pl-3">
-                <a href="${pageContext.request.contextPath}/index"
-                   class="navbar-brand text-white ml-3 font-weight-light"
-                   style="font-size: 1.5rem; font-family: 'Segoe UI', sans-serif">Unigraph</a>
-            </div>
-            <div class="col-sm px-0 ml-3">
-                <div class="d-flex text-white align-items-center">
-                    <a class="p-0 pt-1 px-3 text-decoration-none links" href="#">Edit Profile</a>
-                    <a class="p-0 pt-1 px-3 text-decoration-none links" href="#">University</a>
-                    <a class="p-0 pt-1 px-3 text-decoration-none links" href="#">Settings</a>
-                    <form method="post" class="p-0 m-0 ml-auto"
-                          action="${pageContext.request.contextPath}/settings/logout">
-                        <button type="submit" class="btn btn-sm text-white">Log Out</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="header.jsp"/>
     <div class="row mw-100 p-0 m-0 justify-content-between">
         <div class="col-sm-3 p-0">
             <div class="card border-0" style="background-color: ghostwhite">
@@ -152,7 +132,7 @@
             <div class="card my-5 border-0">
                 <div class="card-header pl-3 pb-2"
                      style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
-                    <a class="text-white text-decoration-none" href="#">Friends</a>
+                    <a class="text-white text-decoration-none" href="${pageContext.request.contextPath}/friends?id=${employee.login}">Friends</a>
                 </div>
                 <div class="card-body p-0">
                     <div class="d-flex flex-row p-0 m-0 border border-top-0 border-primary"

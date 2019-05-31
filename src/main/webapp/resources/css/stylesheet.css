@@ -1,0 +1,12 @@
+body {
+    background-color: ghostwhite;
+}
+
+.links {
+    color: #e1e1e1;
+    font-size: 1rem;
+}
+
+.links:hover {
+    color: white;
+}
