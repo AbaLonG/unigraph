@@ -22,20 +22,20 @@ import java.util.stream.Collectors;
 
 @Controller
 public class IndexController {
-
+    
     private final static Logger logger = Logger.getLogger(IndexController.class);
     private static final String MAN_AVATAR_IMAGE = "img_avatar_man.png";
     private static final String WOMAN_AVATAR_IMAGE = "img_avatar_woman.png";
     private final String UPLOAD_PATH;
-
+    
     private EmployeeService employeeService;
-
+    
     @Autowired
     public IndexController(EmployeeService employeeService, ServletContext servletContext) {
         this.employeeService = employeeService;
         UPLOAD_PATH = servletContext.getRealPath("/") + "resources\\" + "img";
     }
-
+    
     @GetMapping({"/", "/index"})
     public ModelAndView index(HttpServletRequest request) {
         Object userAttribute = request.getSession().getAttribute("user");
@@ -51,7 +51,7 @@ public class IndexController {
             return new ModelAndView("redirect:/index?id=" + user.getLogin());
         }
     }
-
+    
     @GetMapping(value = "/index", params = "id")
     public ModelAndView showPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -75,11 +75,11 @@ public class IndexController {
         }
         return modelAndView;
     }
-
+    
     private boolean pageOfSessionUser(String requestId, Object userAttribute) {
         return userAttribute != null && ((Employee) userAttribute).getLogin().equals(requestId);
     }
-
+    
     public String getAvatarForEmployee(Employee user) {
         final String dir = "resources/img/";
         File avatar = new File(UPLOAD_PATH + File.separator + user.getAvatarFile());
@@ -89,7 +89,7 @@ public class IndexController {
             return dir + (user.getGenderType() == GenderType.Female ? WOMAN_AVATAR_IMAGE : MAN_AVATAR_IMAGE);
         }
     }
-
+    
     @PostMapping("/index/updatePicture")
     public ModelAndView updatePicture(@RequestParam("customFile") MultipartFile file, HttpServletRequest request) {
         final ModelAndView modelAndView = new ModelAndView("redirect:/index");
@@ -125,7 +125,7 @@ public class IndexController {
         }
         return modelAndView;
     }
-
+    
     @PostMapping(value = "/index/subscribe", params = "id")
     public String subscribe(@RequestParam String id, HttpServletRequest request) {
         Object sessionUser = request.getSession().getAttribute("user");
@@ -142,7 +142,7 @@ public class IndexController {
         }
         return "redirect:/index?id=" + id;
     }
-
+    
     @PostMapping(value = "/index/unsubscribe", params = "id")
     public String unsubscribe(@RequestParam String id, HttpServletRequest request) {
         Object sessionUser = request.getSession().getAttribute("user");
