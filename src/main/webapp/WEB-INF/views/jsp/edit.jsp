@@ -79,6 +79,23 @@
             </div>
             <div class="row my-2 align-items-center">
               <div class="col-md-2">
+                <label for="inputType">Type</label>
+              </div>
+              <div class="col-md">
+                <div class="form-label-group">
+                  <select name="type" id="inputType" class="custom-select-sm block btn-block">
+                    <c:if test="${user.type ne null}">
+                      <option selected>${user.type.toString()}</option>
+                    </c:if>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Stuff">Stuff</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row my-2 align-items-center">
+              <div class="col-md-2">
                 <label for="inputGroup">Group</label>
               </div>
               <div class="col-md">
