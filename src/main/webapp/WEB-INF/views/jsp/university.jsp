@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,9 +18,17 @@
   <div class="row">
     <div class="col-12">
       <div class="card rounded-0 border-0">
-        <div class="card-header p-0 pl-3 pt-2 border-0 rounded-0 text-white"
+        <div class="card-header p-1 border-0 rounded-0 text-white"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
-          <h5 class="card-title">University</h5>
+          <div class="row mw-100 p-0 m-0 justify-content-between">
+            <h5 class="col-6 card-title">University</h5>
+            <div class="col-6 pr-3 text-right">
+              <c:if test="${user.type eq 'Teacher'}">
+                <a class="p-0 m-0 text-white text-decoration-none float-right"
+                   href="${pageContext.request.contextPath}/university/structure">Add structure</a>
+              </c:if>
+            </div>
+          </div>
         </div>
       </div>
     </div>

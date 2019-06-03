@@ -44,15 +44,22 @@ public class EditController {
     }
 
     @GetMapping(params = "id")
-    public ModelAndView showEditPage(@RequestParam String id) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView showEditPage(@RequestParam String id, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        Object userAttribute = request.getSession().getAttribute("user");
+        if (userAttribute == null) {
+            return modelAndView;
+        }
+        Employee employee = (Employee) userAttribute;
+        if (!employee.getLogin().equals(id)) {
+            return modelAndView;
+        }
         if (service.getEmployeeService().existsById(id)) {
             modelAndView.addObject("user", service.getEmployeeService().findById(id));
             modelAndView.addObject("service", service);
             modelAndView.setViewName("edit");
             return modelAndView;
         }
-        modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }
 
