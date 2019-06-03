@@ -24,6 +24,7 @@
             <div class="d-flex text-white align-items-center">
                 <a class="p-0 pt-1 px-3 text-decoration-none links" href="${pageContext.request.contextPath}/university">University</a>
                 <a class="p-0 pt-1 px-3 text-decoration-none links" href="${pageContext.request.contextPath}/edit">Edit Profile</a>
+                <a class="p-0 pt-1 px-3 text-decoration-none links" href="${pageContext.request.contextPath}/friends">Friends</a>
                 <form method="post" class="p-0 m-0 ml-auto"
                       action="${pageContext.request.contextPath}/settings/logout">
                     <button type="submit" class="btn btn-sm text-white">Log Out</button>

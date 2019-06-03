@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
-import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
 
 import javax.servlet.http.HttpServletRequest;
