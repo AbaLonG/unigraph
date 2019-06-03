@@ -137,10 +137,10 @@
              href="${pageContext.request.contextPath}/friends?id=${employee.login}">Friends</a>
         </div>
         <div class="card-body p-0">
-          <div class="d-flex flex-wrap p-3 m-0 border border-top-0 border-primary"
+          <div class="d-flex flex-wrap px-2 pt-3 pb-2 m-0 border border-top-0 border-primary"
                style="background-color: white; border-radius: 0 0 0.5rem 0.5rem; min-height: 100px;">
             <c:forEach var="friend" items="${fiveFriends}">
-              <div class="m-2 p-0">
+              <div class="my-0 mx-3 p-0">
                 <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
                   <div class="rounded"
                        style="max-width: 100px; max-height: 100px; width: 100px; height: 100px;
