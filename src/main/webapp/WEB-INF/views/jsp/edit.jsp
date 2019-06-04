@@ -105,7 +105,9 @@
                       <option selected>${user.group.title}</option>
                     </c:if>
                     <c:forEach var="group" items="${service.groupService.findAll()}">
-                      <option value="${group.title}">${group.title}</option>
+                      <c:if test="${user.group ne null and user.group.title ne group.title}">
+                        <option value="${group.title}">${group.title}</option>
+                      </c:if>
                     </c:forEach>
                   </select>
                 </div>
@@ -133,7 +135,8 @@
               </div>
               <div class="col-md">
                 <div class="form-label-group">
-                  <input type="date" name="dateOfBirth" id="inputDateOfBirth" class="form-control" value="${user.dateOfBirth}"/>
+                  <input type="date" name="dateOfBirth" id="inputDateOfBirth" class="form-control"
+                         value="${user.dateOfBirth}"/>
                 </div>
               </div>
             </div>

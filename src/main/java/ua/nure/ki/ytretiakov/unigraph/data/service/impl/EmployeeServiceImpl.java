@@ -109,7 +109,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findAll() {
         return repository.findAll();
     }
-
+    
+    @Override
+    public List<Employee> findEmployeesByType(EmployeeType type) {
+        return repository.findEmployeesByType(type);
+    }
+    
+    @Override
+    public List<Employee> findAllTeachers() {
+        return findEmployeesByType(EmployeeType.Teacher);
+    }
+    
     @Override
     public void deleteAll() {
         logger.info("Deleting all employees");

@@ -21,14 +21,14 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/edit")
 public class EditController {
-
+    
     private UnigraphService service;
-
+    
     @Autowired
     public EditController(UnigraphService service) {
         this.service = service;
     }
-
+    
     @GetMapping
     public String showUserEditPage(HttpServletRequest request) {
         Object userAttribute = request.getSession().getAttribute("user");
@@ -42,7 +42,7 @@ public class EditController {
         }
         return "redirect:/login";
     }
-
+    
     @GetMapping(params = "id")
     public ModelAndView showEditPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("redirect:/login");
@@ -62,7 +62,7 @@ public class EditController {
         }
         return modelAndView;
     }
-
+    
     @PostMapping
     public String editProfile(HttpServletRequest request) {
         Object userAttribute = request.getSession().getAttribute("user");
@@ -83,11 +83,19 @@ public class EditController {
                 return "redirect:/edit";
             }
         }
+        final String groupTitle = request.getParameter("group");
+        if (groupTitle == null) {
+            return "redirect:/edit";
+        }
+        if (!service.getGroupService().existsById(groupTitle)) {
+            return "redirect:/edit";
+        }
+        employee.setGroup(service.getGroupService().findById(groupTitle));
         service.getEmployeeService().save(employee);
         request.getSession().setAttribute("user", employee);
         return "redirect:/edit";
     }
-
+    
     private Date getDate(String date) {
         try {
             return new Date(new DateFormatter("yyyy-MM-dd").parse(date, Locale.getDefault()).getTime());
@@ -96,7 +104,7 @@ public class EditController {
             return new Date();
         }
     }
-
+    
     private EmployeeType getType(String type) {
         try {
             return EmployeeType.valueOf(type);

@@ -67,6 +67,11 @@ public class Employee {
     public Employee() {
 
     }
+    
+    public String getFullName() {
+        return getFirstName() +
+                " " + getLastName();
+    }
 
     public String getLogin() {
         return login;
