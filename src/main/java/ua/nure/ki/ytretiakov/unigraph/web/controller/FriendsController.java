@@ -1,15 +1,20 @@
 package ua.nure.ki.ytretiakov.unigraph.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/friends")
@@ -44,11 +49,12 @@ public class FriendsController {
     }
 
     @GetMapping(params = "id")
-    public ModelAndView showPage(@RequestParam String id) {
+    public ModelAndView showPage(@RequestParam String id, @Nullable List<Employee> filteredFriends) {
         ModelAndView modelAndView = new ModelAndView();
         if (unigraphService.getEmployeeService().existsById(id)) {
             Employee user = unigraphService.getEmployeeService().findById(id);
             modelAndView.setViewName("friends");
+            modelAndView.addObject("filteredFriends", filteredFriends == null ? user.getFriends() : filteredFriends);
             modelAndView.addObject("employee", user);
             modelAndView.addObject("controller", this);
             modelAndView.addObject("faculties", unigraphService.getFacultyService().findAll());
@@ -62,5 +68,18 @@ public class FriendsController {
 
     public String getAvatarForEmployee(Employee employee) {
         return indexController.getAvatarForEmployee(employee);
+    }
+    
+    @PostMapping(value = "/filter", params = "id")
+    public ModelAndView filterFriends(@RequestParam String id, HttpServletRequest request) {
+        List<Employee> filteredFriends = null;
+        if (unigraphService.getEmployeeService().existsById(id)) {
+            Employee user = unigraphService.getEmployeeService().findById(id);
+            filteredFriends = user.getFriends();
+            String facultyTitle = request.getParameter("faculty");
+            String cathedra = request.getParameter("cathedra");
+            String group = request.getParameter("group");
+        }
+        return showPage(id, filteredFriends);
     }
 }

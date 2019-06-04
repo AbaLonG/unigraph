@@ -23,7 +23,7 @@
           <h5>Friends</h5>
         </div>
         <div class="card-body border-left border-right border-bottom border-primary p-0">
-          <c:forEach var="friend" items="${employee.friends}">
+          <c:forEach var="friend" items="${filteredFriends}">
             <div class="row mw-100 m-0 py-3 border border-primary justify-content-between">
               <div class="col-12 col-sm-5 p-0">
                 <div class="p-0 mx-auto" style="max-width: 200px">
@@ -75,10 +75,11 @@
           <h5>Filters</h5>
         </div>
         <div class="card-body p-3 border border-primary">
-          <form>
+          <form action="${pageContext.request.contextPath}/friends/filter" method="post">
             <div class="form-group">
               <label for="facultyTitle">Faculty:</label>
               <select class="form-control" id="facultyTitle" name="facultyTitle">
+                <option>Any</option>
                 <c:forEach var="faculty" items="${faculties}">
                   <option>${faculty.title}</option>
                 </c:forEach>
@@ -86,6 +87,7 @@
               <br>
               <label for="cathedraTitle">Cathedra:</label>
               <select class="form-control" id="cathedraTitle" name="cathedraTitle">
+                <option>Any</option>
                 <c:forEach var="cathedra" items="${cathedras}">
                   <option>${cathedra.title}</option>
                 </c:forEach>
@@ -93,6 +95,7 @@
               <br>
               <label for="groupTitle">Group:</label>
               <select class="form-control" id="groupTitle" name="groupTitle">
+                <option>Any</option>
                 <c:forEach var="group" items="${groups}">
                   <option>${group.title}</option>
                 </c:forEach>
