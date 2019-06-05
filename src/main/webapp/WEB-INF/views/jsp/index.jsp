@@ -26,27 +26,29 @@
                style="font-family: 'Segoe UI', sans-serif; font-size: 1.25rem; background: linear-gradient(to bottom, #285EBE, #396dc3)">
             ${employee.login}
           </div>
-          <c:if test="${employee.login.equals(sessionScope.get('user').login)}">
+          <c:if test="${employee.login.equals(sessionUser.login)}">
             <button type="button" class="btn btn-block border-0 btn-sm btn-primary mt-0" data-toggle="modal"
                     data-target="#changeAvatar"
                     style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
               Cange Profile Picture
             </button>
           </c:if>
-          <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && !userFriends.contains(employee)}">
-            <form class="p-0 m-0" method="post"
-                  action="${pageContext.request.contextPath}/index/subscribe?id=${employee.login}">
-              <input type="submit" class="btn btn-block border-0 btn-sm btn-primary mt-0" value="Add a friend"
-                     style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
-            </form>
-          </c:if>
-          <c:if test="${!employee.login.equals(sessionScope.get('user').login) && userFriends != null && userFriends.contains(employee)}">
-            <form class="p-0 m-0" method="post"
-                  action="${pageContext.request.contextPath}/index/unsubscribe?id=${employee.login}">
-              <input type="submit" class="btn btn-block border-0 btn-sm btn-primary mt-0"
-                     value="Remove from friends"
-                     style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
-            </form>
+          <c:if test="${employee.login ne sessionUser.login}">
+            <c:if test="${!sessionUser.friends.contains(employee)}">
+              <form class="p-0 m-0" method="post"
+                    action="${pageContext.request.contextPath}/index/subscribe?id=${employee.login}">
+                <input type="submit" class="btn btn-block border-0 btn-sm btn-primary mt-0" value="Add a friend"
+                       style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
+              </form>
+            </c:if>
+            <c:if test="${sessionUser.friends.contains(employee)}">
+              <form class="p-0 m-0" method="post"
+                    action="${pageContext.request.contextPath}/index/unsubscribe?id=${employee.login}">
+                <input type="submit" class="btn btn-block border-0 btn-sm btn-primary mt-0"
+                       value="Remove from friends"
+                       style="border-radius: 0 0 0.5rem 0.5rem; background: linear-gradient(to top, #285EBE, #396dc3)">
+              </form>
+            </c:if>
           </c:if>
           <div class="modal" id="changeAvatar">
             <div class="modal-dialog">

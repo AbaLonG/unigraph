@@ -166,16 +166,7 @@ public class Employee {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
         Employee employee = (Employee) o;
-        return getLogin().equals(employee.getLogin()) &&
-                getEmail().equals(employee.getEmail()) &&
-                getFirstName().equals(employee.getFirstName()) &&
-                getLastName().equals(employee.getLastName()) &&
-                getDateOfBirth().equals(employee.getDateOfBirth()) &&
-                getPassword().equals(employee.getPassword()) &&
-                getType() == employee.getType() &&
-                getGenderType() == employee.getGenderType() &&
-                Objects.equals(getAvatarFile(), employee.getAvatarFile()) &&
-                Objects.equals(getGroup(), employee.getGroup());
+        return getLogin().equals(employee.getLogin());
     }
 
     @Override

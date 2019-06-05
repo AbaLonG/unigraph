@@ -41,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findById(final String login) {
         if (login == null) {
-            throw new DatabaseException("Employee email is NULL");
+            throw new DatabaseException("Employee login is NULL");
         }
         final Optional<Employee> byId = repository.findById(login);
         if (byId.isPresent()) {

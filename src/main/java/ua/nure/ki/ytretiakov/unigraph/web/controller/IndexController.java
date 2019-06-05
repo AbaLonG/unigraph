@@ -55,20 +55,18 @@ public class IndexController {
     @GetMapping(value = "/index", params = "id")
     public ModelAndView showPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        Object userAttribute = request.getSession().getAttribute("user");
+        if (request.getSession().getAttribute("user") == null) {
+            return new ModelAndView("redirect:/login");
+        }
+        Employee sessionUser = (Employee) request.getSession().getAttribute("user");
         if (employeeService.existsById(id)) {
-            Employee user = employeeService.findById(id);
-            if (pageOfSessionUser(id, userAttribute)) {
-                request.getSession().setAttribute("user", user);
-            }
-            modelAndView.addObject("employee", user);
-            modelAndView.addObject("avatarTitle", getAvatarForEmployee(user));
-            modelAndView.addObject("friends", user.getFriends());
-            modelAndView.addObject("fiveFriends", user.getFriends().stream().limit(5).collect(Collectors.toList()));
+            Employee pageEmployee = employeeService.findById(id);
+            modelAndView.addObject("employee", pageEmployee);
+            modelAndView.addObject("sessionUser", sessionUser);
+            modelAndView.addObject("avatarTitle", getAvatarForEmployee(pageEmployee));
+            modelAndView.addObject("friends", pageEmployee.getFriends());
+            modelAndView.addObject("fiveFriends", pageEmployee.getFriends().stream().limit(5).collect(Collectors.toList()));
             modelAndView.addObject("controller", this);
-            if (userAttribute != null) {
-                modelAndView.addObject("userFriends", ((Employee) userAttribute).getFriends());
-            }
             modelAndView.setViewName("index");
         } else {
             modelAndView.setViewName("redirect:/login");
