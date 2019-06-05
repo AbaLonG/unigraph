@@ -10,6 +10,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
+import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,10 @@ public class UniversityController {
     @GetMapping("/structure")
     public ModelAndView structurePage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("structure");
+        Object userAttribute = request.getAttribute("user");
+        if (userAttribute == null || ((Employee) userAttribute).getType() != EmployeeType.Teacher) {
+            return new ModelAndView("redirect:/university");
+        }
         modelAndView.addObject("service", service);
         return modelAndView;
     }
