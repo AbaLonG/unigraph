@@ -25,7 +25,7 @@
             <div class="col-6 pr-3 text-right">
               <c:if test="${user.type eq 'Teacher'}">
                 <a class="p-0 m-0 text-white text-decoration-none float-right"
-                   href="${pageContext.request.contextPath}/university/structure">Add structure</a>
+                   href="${pageContext.request.contextPath}/university/structure">Structure</a>
               </c:if>
             </div>
           </div>
