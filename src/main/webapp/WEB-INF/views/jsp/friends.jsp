@@ -75,7 +75,7 @@
           <h5>Filters</h5>
         </div>
         <div class="card-body p-3 border border-primary">
-          <form action="${pageContext.request.contextPath}/friends/filter" method="post">
+          <form action="${pageContext.request.contextPath}/friends/filter?id=${employee.login}" method="post">
             <div class="form-group">
               <label for="facultyTitle">Faculty:</label>
               <select class="form-control" id="facultyTitle" name="facultyTitle">

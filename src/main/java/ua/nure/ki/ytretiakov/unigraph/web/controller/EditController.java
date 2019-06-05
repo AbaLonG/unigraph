@@ -83,14 +83,17 @@ public class EditController {
                 return "redirect:/edit";
             }
         }
-        final String groupTitle = request.getParameter("group");
-        if (groupTitle == null) {
-            return "redirect:/edit";
+        if (employee.getType() == EmployeeType.Student) {
+            final String groupTitle = request.getParameter("group");
+            if (groupTitle == null) {
+                return "redirect:/edit";
+            }
+            if (!service.getGroupService().existsById(groupTitle)) {
+                return "redirect:/edit";
+            }
+            employee.setGroup(service.getGroupService().findById(groupTitle));
         }
-        if (!service.getGroupService().existsById(groupTitle)) {
-            return "redirect:/edit";
-        }
-        employee.setGroup(service.getGroupService().findById(groupTitle));
+        employee.setFriends(user.getFriends());
         service.getEmployeeService().save(employee);
         request.getSession().setAttribute("user", employee);
         return "redirect:/edit";

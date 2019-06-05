@@ -101,13 +101,8 @@
               <div class="col-md">
                 <div class="form-label-group">
                   <select name="group" id="inputGroup" class="custom-select-sm block btn-block">
-                    <c:if test="${user.group ne null}">
-                      <option selected>${user.group.title}</option>
-                    </c:if>
                     <c:forEach var="group" items="${service.groupService.findAll()}">
-                      <c:if test="${user.group ne null and user.group.title ne group.title}">
                         <option value="${group.title}">${group.title}</option>
-                      </c:if>
                     </c:forEach>
                   </select>
                 </div>

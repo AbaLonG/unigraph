@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
@@ -49,19 +50,21 @@ public class FriendsController {
     }
 
     @GetMapping(params = "id")
-    public ModelAndView showPage(@RequestParam String id, @Nullable List<Employee> filteredFriends) {
+    public ModelAndView showPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
-        if (unigraphService.getEmployeeService().existsById(id)) {
+        if (!unigraphService.getEmployeeService().existsById(id)) {
+            modelAndView.setViewName("redirect:/index");
+        } else {
             Employee user = unigraphService.getEmployeeService().findById(id);
             modelAndView.setViewName("friends");
-            modelAndView.addObject("filteredFriends", filteredFriends == null ? user.getFriends() : filteredFriends);
             modelAndView.addObject("employee", user);
             modelAndView.addObject("controller", this);
             modelAndView.addObject("faculties", unigraphService.getFacultyService().findAll());
             modelAndView.addObject("cathedras", unigraphService.getCathedraService().findAll());
             modelAndView.addObject("groups", unigraphService.getGroupService().findAll());
-        } else {
-            modelAndView.setViewName("redirect:/index");
+            Object filteredFriends = request.getSession().getAttribute("filteredFriends");
+            modelAndView.addObject("filteredFriends", filteredFriends == null ? user.getFriends() : (List<Employee>) filteredFriends);
+            request.getSession().removeAttribute("filteredFriends");
         }
         return modelAndView;
     }
@@ -69,17 +72,62 @@ public class FriendsController {
     public String getAvatarForEmployee(Employee employee) {
         return indexController.getAvatarForEmployee(employee);
     }
-    
+
     @PostMapping(value = "/filter", params = "id")
-    public ModelAndView filterFriends(@RequestParam String id, HttpServletRequest request) {
+    public String filterFriends(@RequestParam String id, HttpServletRequest request) {
         List<Employee> filteredFriends = null;
         if (unigraphService.getEmployeeService().existsById(id)) {
             Employee user = unigraphService.getEmployeeService().findById(id);
             filteredFriends = user.getFriends();
-            String facultyTitle = request.getParameter("faculty");
-            String cathedra = request.getParameter("cathedra");
-            String group = request.getParameter("group");
+            filterByFaculty(filteredFriends, request.getParameter("facultyTitle"));
+            filterByCathedra(filteredFriends, request.getParameter("cathedraTitle"));
+            filterByGroup(filteredFriends, request.getParameter("groupTitle"));
         }
-        return showPage(id, filteredFriends);
+        request.getSession().setAttribute("filteredFriends", filteredFriends);
+        return "redirect:/friends?id=" + id;
+    }
+
+    private void filterByFaculty(List<Employee> employees, String facultyTitle) {
+        if (facultyTitle != null && !facultyTitle.equalsIgnoreCase("any")) {
+            List<Employee> facultyEmployees = new ArrayList<>();
+            for (Employee e : employees) {
+                if (e.getGroup() != null && e.getGroup().getCathedra() != null) {
+                    Faculty faculty = e.getGroup().getCathedra().getFaculty();
+                    if (faculty != null) {
+                        if (faculty.getTitle().equalsIgnoreCase(facultyTitle)) {
+                            facultyEmployees.add(e);
+                        }
+                    }
+                }
+            }
+            employees.retainAll(facultyEmployees);
+        }
+    }
+
+    private void filterByCathedra(List<Employee> employees, String cathedraTitle) {
+        if (cathedraTitle != null && !cathedraTitle.equalsIgnoreCase("any")) {
+            List<Employee> cathedraEmployees = new ArrayList<>();
+            for (Employee e : employees) {
+                if (e.getGroup() != null) {
+                    Cathedra cathedra = e.getGroup().getCathedra();
+                    if (cathedra != null && cathedra.getTitle().equalsIgnoreCase(cathedraTitle)) {
+                        cathedraEmployees.add(e);
+                    }
+                }
+            }
+            employees.retainAll(cathedraEmployees);
+        }
+    }
+
+    private void filterByGroup(List<Employee> employees, String groupTitle) {
+        if (groupTitle != null && !groupTitle.equalsIgnoreCase("any")) {
+            List<Employee> groupEmployees = new ArrayList<>();
+            for (Employee e : employees) {
+                if (e.getGroup() != null && e.getGroup().getTitle().equalsIgnoreCase(groupTitle)) {
+                    groupEmployees.add(e);
+                }
+            }
+            employees.retainAll(groupEmployees);
+        }
     }
 }
