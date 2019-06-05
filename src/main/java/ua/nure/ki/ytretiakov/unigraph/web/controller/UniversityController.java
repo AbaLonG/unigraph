@@ -40,7 +40,7 @@ public class UniversityController {
     @GetMapping("/structure")
     public ModelAndView structurePage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("structure");
-        Object userAttribute = request.getAttribute("user");
+        Object userAttribute = request.getSession().getAttribute("user");
         if (userAttribute == null || ((Employee) userAttribute).getType() != EmployeeType.Teacher) {
             return new ModelAndView("redirect:/university");
         }
