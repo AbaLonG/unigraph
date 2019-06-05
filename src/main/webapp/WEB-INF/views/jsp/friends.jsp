@@ -18,13 +18,13 @@
   <div class="row mw-100 m-0 mb-5 border-0 justify-content-between">
     <div class="col-12 col-md-7 p-0" style="min-height: 400px;">
       <div class="card rounded-0 border-0">
-        <div class="card-header rounded-0 text-white"
+        <div class="card-header rounded-0 border-0 text-white"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
           <h5>Friends</h5>
         </div>
-        <div class="card-body border-left border-right border-bottom border-primary p-0">
+        <div class="card-body border-0 p-0">
           <c:forEach var="friend" items="${filteredFriends}">
-            <div class="row mw-100 m-0 py-3 border border-primary justify-content-between">
+            <div class="row mw-100 m-0 py-3 border justify-content-between">
               <div class="col-12 col-sm-5 p-0">
                 <div class="p-0 mx-auto" style="max-width: 200px">
                   <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
@@ -70,11 +70,11 @@
     </div>
     <div class="col-12 col-md-5 p-0" style="min-height: 400px">
       <div class="card rounded-0 border-0">
-        <div class="card-header rounded-0 text-white"
+        <div class="card-header rounded-0 border-0 text-white"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
           <h5>Filters</h5>
         </div>
-        <div class="card-body p-3 border border-primary">
+        <div class="card-body p-3 border">
           <form action="${pageContext.request.contextPath}/friends/filter?id=${employee.login}" method="post">
             <div class="form-group">
               <label for="facultyTitle">Faculty:</label>
