@@ -1,5 +1,6 @@
 package ua.nure.ki.ytretiakov.unigraph.web.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/friends")
@@ -81,6 +84,8 @@ public class FriendsController {
             filterByFaculty(filteredFriends, request.getParameter("facultyTitle"));
             filterByCathedra(filteredFriends, request.getParameter("cathedraTitle"));
             filterByGroup(filteredFriends, request.getParameter("groupTitle"));
+            filterByType(filteredFriends, request.getParameter("employeeType"));
+            filterByName(filteredFriends, request.getParameter("nameFilter"));
         }
         request.getSession().setAttribute("filteredFriends", filteredFriends);
         return "redirect:/friends?id=" + id;
@@ -128,5 +133,24 @@ public class FriendsController {
             }
             employees.retainAll(groupEmployees);
         }
+    }
+    
+    private void filterByType(List<Employee> filteredFriends, String employeeType) {
+        if (StringUtils.isBlank(employeeType) || "any".equalsIgnoreCase(employeeType))
+            return;
+        
+        filteredFriends.retainAll(filteredFriends.stream()
+                .filter(e -> e.getType() != null)
+                .filter(e -> e.getType().toString().equalsIgnoreCase(employeeType))
+                .collect(Collectors.toList()));
+    }
+    
+    private void filterByName(List<Employee> filteredFriends, String nameFilter) {
+        if (StringUtils.isBlank(nameFilter))
+            return;
+        
+        filteredFriends.retainAll(filteredFriends.stream()
+                .filter(e -> e.getFullName().toLowerCase().contains(nameFilter.toLowerCase()))
+                .collect(Collectors.toList()));
     }
 }

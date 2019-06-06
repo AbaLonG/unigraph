@@ -101,6 +101,14 @@
                 </c:forEach>
               </select>
               <br>
+              <label for="employeeType">Employee type:</label>
+              <select class="form-control" id="employeeType" name="employeeType">
+                <option>Any</option>
+                <option>Student</option>
+                <option>Teacher</option>
+                <option>Stuff</option>
+              </select>
+              <br>
               <label for="nameFilter">Name Filter:</label>
               <input type="text" class="form-control" name="nameFilter" id="nameFilter">
             </div>
