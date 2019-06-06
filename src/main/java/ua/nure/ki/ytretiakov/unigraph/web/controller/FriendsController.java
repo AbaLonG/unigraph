@@ -1,7 +1,6 @@
 package ua.nure.ki.ytretiakov.unigraph.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,16 +19,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/friends")
 public class FriendsController {
-
+    
     private UnigraphService unigraphService;
     private IndexController indexController;
-
+    
     @Autowired
     public FriendsController(UnigraphService unigraphService, IndexController indexController) {
         this.unigraphService = unigraphService;
         this.indexController = indexController;
     }
-
+    
     @GetMapping
     public ModelAndView userFriends(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -48,7 +47,7 @@ public class FriendsController {
         modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }
-
+    
     @GetMapping(params = "id")
     public ModelAndView showPage(@RequestParam String id, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -68,11 +67,11 @@ public class FriendsController {
         }
         return modelAndView;
     }
-
+    
     public String getAvatarForEmployee(Employee employee) {
         return indexController.getAvatarForEmployee(employee);
     }
-
+    
     @PostMapping(value = "/filter", params = "id")
     public String filterFriends(@RequestParam String id, HttpServletRequest request) {
         List<Employee> filteredFriends = null;
@@ -86,7 +85,7 @@ public class FriendsController {
         request.getSession().setAttribute("filteredFriends", filteredFriends);
         return "redirect:/friends?id=" + id;
     }
-
+    
     private void filterByFaculty(List<Employee> employees, String facultyTitle) {
         if (facultyTitle != null && !facultyTitle.equalsIgnoreCase("any")) {
             List<Employee> facultyEmployees = new ArrayList<>();
@@ -103,7 +102,7 @@ public class FriendsController {
             employees.retainAll(facultyEmployees);
         }
     }
-
+    
     private void filterByCathedra(List<Employee> employees, String cathedraTitle) {
         if (cathedraTitle != null && !cathedraTitle.equalsIgnoreCase("any")) {
             List<Employee> cathedraEmployees = new ArrayList<>();
@@ -118,7 +117,7 @@ public class FriendsController {
             employees.retainAll(cathedraEmployees);
         }
     }
-
+    
     private void filterByGroup(List<Employee> employees, String groupTitle) {
         if (groupTitle != null && !groupTitle.equalsIgnoreCase("any")) {
             List<Employee> groupEmployees = new ArrayList<>();
