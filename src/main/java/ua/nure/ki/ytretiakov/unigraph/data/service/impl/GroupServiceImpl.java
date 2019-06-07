@@ -75,7 +75,12 @@ public class GroupServiceImpl implements GroupService {
         logger.info("Looking for Group with title: " + title);
         return repository.existsById(title);
     }
-
+    
+    @Override
+    public Group findGroupOfManager(String teacherLogin) {
+        return repository.findGroupByGroupManager(teacherLogin);
+    }
+    
     @Override
     public List<Group> findAll() {
         return repository.findAll();
