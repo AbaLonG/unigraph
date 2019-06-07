@@ -94,13 +94,13 @@
                 </div>
               </div>
             </div>
-            <div class="row my-2 align-items-center">
+            <div class="row groupRow my-2 align-items-center">
               <div class="col-md-2">
                 <label for="inputGroup">Group</label>
               </div>
               <div class="col-md">
                 <div class="form-label-group">
-                  <select name="group" id="inputGroup" class="custom-select-sm block btn-block">
+                  <select name="group" id="inputGroup" class="custom-select-sm block groupSelect btn-block">
                     <c:forEach var="group" items="${service.groupService.findAll()}">
                         <option value="${group.title}">${group.title}</option>
                     </c:forEach>
@@ -108,6 +108,11 @@
                 </div>
               </div>
             </div>
+            <script>
+              $(".groupSelect").on("change", function () {
+                  alert($(this).innerText);
+              });
+            </script>
             <div class="row my-2 align-items-center">
               <div class="col-md-2">
                 <label>Gender</label>

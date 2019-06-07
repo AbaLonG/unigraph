@@ -109,12 +109,12 @@
               <td>${employee.group.cathedra.title}</td>
             </tr>
             <tr>
-              <td>Group</td>
-              <td>${employee.group.title}</td>
-            </tr>
-            <tr>
               <td>Type</td>
               <td>${employee.type.toString()}</td>
+            </tr>
+            <tr>
+              <td>Group</td>
+              <td>${employee.group.title}</td>
             </tr>
             <tr>
               <td>Email</td>
