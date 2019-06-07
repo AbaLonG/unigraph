@@ -87,27 +87,52 @@
                     <c:if test="${user.type ne null}">
                       <option selected>${user.type.toString()}</option>
                     </c:if>
-                    <option value="Student">Student</option>
-                    <option value="Teacher">Teacher</option>
-                    <option value="Stuff">Stuff</option>
+                    <c:if test="${user.type.toString() != 'None'}">
+                      <option value="None">None</option>
+                    </c:if>
+                    <c:if test="${user.type.toString() != 'Student'}">
+                      <option value="Student">Student</option>
+                    </c:if>
+                    <c:if test="${user.type.toString() != 'Teacher'}">
+                      <option value="Teacher">Teacher</option>
+                    </c:if>
+                    <c:if test="${user.type.toString() != 'Stuff'}">
+                      <option value="Stuff">Stuff</option>
+                    </c:if>
                   </select>
                 </div>
               </div>
             </div>
             <div class="row groupRow my-2 align-items-center">
               <div class="col-md-2">
-                <label for="inputGroup">Group</label>
+                <label for="cathedra">Cathedra</label>
               </div>
               <div class="col-md">
                 <div class="form-label-group">
-                  <select name="group" id="inputGroup" class="custom-select-sm block groupSelect btn-block">
-                    <c:forEach var="group" items="${service.groupService.findAll()}">
-                        <option value="${group.title}">${group.title}</option>
+                  <select class="custom-select-sm block btn-block" id="cathedra" name="cathedra">
+                    <c:forEach var="cathedra" items="${service.cathedraService.findAll()}">
+                      <option>${cathedra.title}</option>
                     </c:forEach>
                   </select>
                 </div>
               </div>
             </div>
+            <c:if test="${user.type.toString() == 'Student'}">
+              <div class="row groupRow my-2 align-items-center">
+                <div class="col-md-2">
+                  <label for="inputGroup">Group</label>
+                </div>
+                <div class="col-md">
+                  <div class="form-label-group">
+                    <select name="group" id="inputGroup" class="custom-select-sm block groupSelect btn-block">
+                      <c:forEach var="group" items="${service.groupService.findAll()}">
+                        <option value="${group.title}">${group.title}</option>
+                      </c:forEach>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </c:if>
             <script>
               $(".groupSelect").on("change", function () {
                   alert($(this).innerText);
@@ -129,7 +154,7 @@
                 </div>
               </div>
             </div>
-            <div class="row my-2 align-items-center">
+            <div class="row mt-3 mb-1 align-items-center">
               <div class="col-md-2">
                 <label for="inputDateOfBirth">Date Of Birth</label>
               </div>

@@ -52,7 +52,8 @@ public class UniversityController {
     public String addFaculty(HttpServletRequest request) {
         Faculty faculty = new Faculty();
         faculty.setTitle(request.getParameter("title"));
-        faculty.setFacultyManager(service.getEmployeeService().findById(request.getParameter("manager")));
+        final Employee facultyManager = service.getEmployeeService().findById(request.getParameter("manager"));
+        faculty.setFacultyManager(facultyManager);
         service.getFacultyService().save(faculty);
         return "redirect:/university/structure";
     }
@@ -62,8 +63,11 @@ public class UniversityController {
         Cathedra cathedra = new Cathedra();
         cathedra.setTitle(request.getParameter("title"));
         cathedra.setFaculty(service.getFacultyService().findById(request.getParameter("faculty")));
-        cathedra.setCathedraManager(service.getEmployeeService().findById(request.getParameter("manager")));
+        final Employee cathedraManager = service.getEmployeeService().findById(request.getParameter("manager"));
+        cathedraManager.setCathedra(cathedra);
+        cathedra.setCathedraManager(cathedraManager);
         service.getCathedraService().save(cathedra);
+        service.getEmployeeService().save(cathedraManager);
         return "redirect:/university/structure";
     }
     
@@ -71,8 +75,11 @@ public class UniversityController {
     public String addGroup(HttpServletRequest request) {
         Group group = new Group();
         group.setTitle(request.getParameter("title"));
-        group.setCathedra(service.getCathedraService().findById(request.getParameter("cathedra")));
-        group.setGroupManager(service.getEmployeeService().findById(request.getParameter("manager")));
+        final Cathedra cathedra = service.getCathedraService().findById(request.getParameter("cathedra"));
+        final Employee groupManager = service.getEmployeeService().findById(request.getParameter("manager"));
+        group.setCathedra(cathedra);
+        groupManager.setCathedra(cathedra);
+        group.setGroupManager(groupManager);
         service.getGroupService().save(group);
         return "redirect:/university/structure";
     }

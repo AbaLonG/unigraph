@@ -102,11 +102,11 @@
             </tr>
             <tr>
               <td>Faculty</td>
-              <td>${employee.group.cathedra.faculty.title}</td>
+              <td>${employee.cathedra.faculty.title}</td>
             </tr>
             <tr>
               <td>Cathedra</td>
-              <td>${employee.group.cathedra.title}</td>
+              <td>${employee.cathedra.title}</td>
             </tr>
             <tr>
               <td>Type</td>
