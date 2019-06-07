@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
+import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.GenderType;
 import ua.nure.ki.ytretiakov.unigraph.data.service.EmployeeService;
+import ua.nure.ki.ytretiakov.unigraph.data.service.GroupService;
 import ua.nure.ki.ytretiakov.unigraph.util.UnigraphUtils;
 
 import javax.servlet.ServletContext;
@@ -29,10 +31,12 @@ public class IndexController {
     private final String UPLOAD_PATH;
     
     private EmployeeService employeeService;
+    private GroupService groupService;
     
     @Autowired
-    public IndexController(EmployeeService employeeService, ServletContext servletContext) {
+    public IndexController(EmployeeService employeeService, ServletContext servletContext, GroupService groupService) {
         this.employeeService = employeeService;
+        this.groupService = groupService;
         UPLOAD_PATH = servletContext.getRealPath("/") + "resources\\" + "img";
     }
     
@@ -67,6 +71,9 @@ public class IndexController {
             modelAndView.addObject("friends", pageEmployee.getFriends());
             modelAndView.addObject("fiveFriends", pageEmployee.getFriends().stream().limit(5).collect(Collectors.toList()));
             modelAndView.addObject("controller", this);
+            if (pageEmployee.getType() == EmployeeType.Teacher) {
+                modelAndView.addObject("groupOfTeacher", groupService.findGroupOfManager(pageEmployee.getLogin()));
+            }
             modelAndView.setViewName("index");
         } else {
             modelAndView.setViewName("redirect:/login");

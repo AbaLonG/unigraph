@@ -114,7 +114,14 @@
             </tr>
             <tr>
               <td>Group</td>
-              <td>${employee.group.title}</td>
+              <td>
+                <c:if test="${employee.type.toString() == 'Student'}">
+                  ${employee.group.title}
+                </c:if>
+                <c:if test="${employee.type.toString() == 'Teacher'}">
+                  ${groupOfTeacher.title}
+                </c:if>
+              </td>
             </tr>
             <tr>
               <td>Email</td>
