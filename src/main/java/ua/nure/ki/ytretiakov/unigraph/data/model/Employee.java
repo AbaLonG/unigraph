@@ -45,6 +45,9 @@ public class Employee {
 
     @ManyToOne(targetEntity = Group.class, cascade = CascadeType.ALL)
     private Group group;
+    
+    @ManyToOne(targetEntity = Cathedra.class, cascade = CascadeType.ALL)
+    private Cathedra cathedra;
 
     @ManyToMany(targetEntity = Employee.class, cascade = CascadeType.ALL)
     private List<Employee> friends;
@@ -160,7 +163,15 @@ public class Employee {
     public void setFriends(List<Employee> friends) {
         this.friends = friends;
     }
-
+    
+    public Cathedra getCathedra() {
+        return cathedra;
+    }
+    
+    public void setCathedra(Cathedra cathedra) {
+        this.cathedra = cathedra;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

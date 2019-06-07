@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.GenderType;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
@@ -85,13 +87,18 @@ public class EditController {
         }
         if (employee.getType() == EmployeeType.Student) {
             final String groupTitle = request.getParameter("group");
-            if (groupTitle == null) {
+            if (groupTitle == null || !service.getGroupService().existsById(groupTitle)) {
                 return "redirect:/edit";
             }
-            if (!service.getGroupService().existsById(groupTitle)) {
-                return "redirect:/edit";
+            final Group group = service.getGroupService().findById(groupTitle);
+            employee.setGroup(group);
+            employee.setCathedra(group.getCathedra());
+        }
+        if (employee.getType() == EmployeeType.Teacher) {
+            final String cathedraTitle = request.getParameter("cathedra");
+            if (cathedraTitle != null && service.getCathedraService().existsById(cathedraTitle)) {
+                employee.setCathedra(service.getCathedraService().findById(cathedraTitle));
             }
-            employee.setGroup(service.getGroupService().findById(groupTitle));
         }
         employee.setFriends(user.getFriends());
         service.getEmployeeService().save(employee);
@@ -112,7 +119,7 @@ public class EditController {
         try {
             return EmployeeType.valueOf(type);
         } catch (Exception e) {
-            return EmployeeType.Student;
+            return EmployeeType.None;
         }
     }
 }
