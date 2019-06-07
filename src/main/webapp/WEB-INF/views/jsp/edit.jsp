@@ -117,7 +117,7 @@
                 </div>
               </div>
             </div>
-            <c:if test="${user.type.toString() == 'Student'}">
+            <c:if test="${user.type.toString() == 'Student' or user.type.toString() == 'None'}">
               <div class="row groupRow my-2 align-items-center">
                 <div class="col-md-2">
                   <label for="inputGroup">Group</label>

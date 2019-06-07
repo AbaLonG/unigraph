@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
+import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
+import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -95,8 +95,8 @@ public class FriendsController {
         if (facultyTitle != null && !facultyTitle.equalsIgnoreCase("any")) {
             List<Employee> facultyEmployees = new ArrayList<>();
             for (Employee e : employees) {
-                if (e.getGroup() != null && e.getGroup().getCathedra() != null) {
-                    Faculty faculty = e.getGroup().getCathedra().getFaculty();
+                if (e.getCathedra() != null) {
+                    Faculty faculty = e.getCathedra().getFaculty();
                     if (faculty != null) {
                         if (faculty.getTitle().equalsIgnoreCase(facultyTitle)) {
                             facultyEmployees.add(e);
@@ -112,11 +112,8 @@ public class FriendsController {
         if (cathedraTitle != null && !cathedraTitle.equalsIgnoreCase("any")) {
             List<Employee> cathedraEmployees = new ArrayList<>();
             for (Employee e : employees) {
-                if (e.getGroup() != null) {
-                    Cathedra cathedra = e.getGroup().getCathedra();
-                    if (cathedra != null && cathedra.getTitle().equalsIgnoreCase(cathedraTitle)) {
-                        cathedraEmployees.add(e);
-                    }
+                if (e.getCathedra() != null && e.getCathedra().getTitle().equalsIgnoreCase(cathedraTitle)) {
+                    cathedraEmployees.add(e);
                 }
             }
             employees.retainAll(cathedraEmployees);
@@ -127,8 +124,15 @@ public class FriendsController {
         if (groupTitle != null && !groupTitle.equalsIgnoreCase("any")) {
             List<Employee> groupEmployees = new ArrayList<>();
             for (Employee e : employees) {
-                if (e.getGroup() != null && e.getGroup().getTitle().equalsIgnoreCase(groupTitle)) {
-                    groupEmployees.add(e);
+                if (e.getType() == EmployeeType.Student) {
+                    if (e.getGroup() != null && e.getGroup().getTitle().equalsIgnoreCase(groupTitle)) {
+                        groupEmployees.add(e);
+                    }
+                } else if (e.getType() == EmployeeType.Teacher) {
+                    final Group groupOfManager = unigraphService.getGroupService().findGroupOfManager(e.getLogin());
+                    if (groupOfManager != null && groupOfManager.getTitle().equalsIgnoreCase(groupTitle)) {
+                        groupEmployees.add(e);
+                    }
                 }
             }
             employees.retainAll(groupEmployees);
