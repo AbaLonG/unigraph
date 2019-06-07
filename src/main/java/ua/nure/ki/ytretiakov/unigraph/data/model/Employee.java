@@ -34,7 +34,7 @@ public class Employee {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private EmployeeType type;
+    private EmployeeType type = EmployeeType.None;
 
     @Column
     @Enumerated(EnumType.STRING)
