@@ -6,6 +6,7 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
+import ua.nure.ki.ytretiakov.unigraph.data.repository.CommentRepository;
 import ua.nure.ki.ytretiakov.unigraph.data.service.*;
 
 import java.util.List;
@@ -18,16 +19,19 @@ public class UnigraphServiceImpl implements UnigraphService {
     private GroupService groupService;
     private CathedraService cathedraService;
     private FacultyService facultyService;
+    private CommentRepository commentRepository;
     
     @Autowired
     public UnigraphServiceImpl(final EmployeeService employeeService,
                                final GroupService groupService,
                                final CathedraService cathedraService,
-                               final FacultyService facultyService) {
+                               final FacultyService facultyService,
+                               final CommentRepository commentRepository) {
         this.employeeService = employeeService;
         this.groupService = groupService;
         this.cathedraService = cathedraService;
         this.facultyService = facultyService;
+        this.commentRepository = commentRepository;
     }
     
     @Override
@@ -81,5 +85,10 @@ public class UnigraphServiceImpl implements UnigraphService {
     @Override
     public FacultyService getFacultyService() {
         return facultyService;
+    }
+    
+    @Override
+    public CommentRepository getCommentRepository() {
+        return commentRepository;
     }
 }

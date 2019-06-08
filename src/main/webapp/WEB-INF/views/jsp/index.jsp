@@ -88,6 +88,9 @@
       </div>
     </div>
     <div class="col-sm-9 p-0 mt-3 mt-sm-0">
+
+      <%--      Table --%>
+
       <div class="card border-primary" style="border-radius: 0 0 0.5rem 0.5rem; border-top: 0; border-right: 0">
         <div class="card-header pl-3 pb-2 rounded-0 text-white"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
@@ -139,6 +142,9 @@
           </table>
         </div>
       </div>
+
+      <%--      Friends --%>
+
       <div class="card my-5 border-0">
         <div class="card-header pl-3 pb-2"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
@@ -160,6 +166,60 @@
                 <p class="p-0 m-0 text-center" style="font-size: 12px">${friend.login}</p>
               </div>
             </c:forEach>
+          </div>
+        </div>
+      </div>
+
+      <%--      Wall --%>
+
+      <div class="card my-5 border-0">
+        <div class="card-header pl-3 pb-2"
+             style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
+          <h5 class="card-title text-white" style="font-size: 1rem">Wall</h5>
+        </div>
+        <div class="card-body p-0 border border-top-0 border-primary" style="border-radius: 0 0 0.5rem 0.5rem;">
+          <div class="row p-0 m-0 mt-3">
+            <div class="col-12">
+              <form action="${pageContext.request.contextPath}/index/comment?from=${sessionUser.login}&to=${employee.login}"
+                    method="post">
+                <div class="form-group">
+                  <label for="comment"></label>
+                  <textarea class="form-control" rows="5" id="comment" name="text"
+                            style="min-height: 100px; max-height: 100px"></textarea>
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary float-right">Leave comment</button>
+              </form>
+            </div>
+          </div>
+          <div class="row p-0 m-0">
+            <div class="col-12 p-2">
+              <div class="d-flex flex-column-reverse px-2 pt-0 pb-2 m-0 border-0"
+                   style="background-color: white; border-radius: 0 0 0.5rem 0.5rem;">
+                <%-- Comments --%>
+                <c:forEach var="comment" items="${controller.getCommentsFor(employee)}">
+                  <div class="row mt-3 pt-2 border-top">
+                    <div class="col-6">
+                      <p class="mb-1">
+                        From: <a class="text-decoration-none text-primary"
+                                 href="${pageContext.request.contextPath}/index?id=${comment.fromEmployeeLogin}">${comment.fromEmployeeLogin}</a>
+                      </p>
+                    </div>
+                    <div class="col-6 text-right">
+                      <p class="mb-1">Date: ${comment.commentDate}</p>
+                    </div>
+                    <div class="col-12">
+                      <div class="m-0 p-2 border rounded-sm" style="min-height: 75px; max-height: 100px">
+                        <p class="m-0 p-0">
+                          <c:if test="${comment.content ne null}">
+                            ${comment.content.trim()}
+                          </c:if>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </c:forEach>
+              </div>
+            </div>
           </div>
         </div>
       </div>
