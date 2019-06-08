@@ -81,10 +81,6 @@ public class IndexController {
         return modelAndView;
     }
     
-    private boolean pageOfSessionUser(String requestId, Object userAttribute) {
-        return userAttribute != null && ((Employee) userAttribute).getLogin().equals(requestId);
-    }
-    
     public String getAvatarForEmployee(Employee user) {
         final String dir = "resources/img/";
         File avatar = new File(UPLOAD_PATH + File.separator + user.getAvatarFile());

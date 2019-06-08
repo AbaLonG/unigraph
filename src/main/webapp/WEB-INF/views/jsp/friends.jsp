@@ -30,7 +30,7 @@
                   <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
                     <div class="rounded"
                          style="max-width: 200px; max-height: 200px; width: 200px; height: 200px;
-                                 background-image: url(${controller.getAvatarForEmployee(friend)});
+                                 background-image: url(${controller.employeesUtil.getAvatarForEmployee(friend)});
                                  background-repeat: no-repeat; background-size: cover; background-position: 50% 50%;">
                     </div>
                   </a>

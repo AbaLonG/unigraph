@@ -121,6 +121,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
     
     @Override
+    public List<Employee> findAllWithCount(int count) {
+        return repository.findEmployeesCount(count);
+    }
+    
+    @Override
     public void deleteAll() {
         logger.info("Deleting all employees");
         repository.deleteAll();

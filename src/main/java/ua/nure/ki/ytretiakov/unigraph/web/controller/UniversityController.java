@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Cathedra;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Employee;
@@ -12,18 +13,24 @@ import ua.nure.ki.ytretiakov.unigraph.data.model.Faculty;
 import ua.nure.ki.ytretiakov.unigraph.data.model.Group;
 import ua.nure.ki.ytretiakov.unigraph.data.model.enumeration.EmployeeType;
 import ua.nure.ki.ytretiakov.unigraph.data.service.UnigraphService;
+import ua.nure.ki.ytretiakov.unigraph.util.EmployeesUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/university")
 public class UniversityController {
     
+    private static final int DEFAULT_EMPLOYEES_COUNT = 20;
+    
     private UnigraphService service;
+    private EmployeesUtil employeesUtil;
     
     @Autowired
-    public UniversityController(UnigraphService service) {
+    public UniversityController(UnigraphService service, EmployeesUtil employeesUtil) {
         this.service = service;
+        this.employeesUtil = employeesUtil;
     }
     
     @GetMapping
@@ -33,6 +40,15 @@ public class UniversityController {
         if (userAttribute != null) {
             Employee employee = (Employee) userAttribute;
             modelAndView.addObject("user", employee);
+            modelAndView.addObject("employeesUtil", employeesUtil);
+            modelAndView.addObject("service", service);
+            final Object filteredEmployees = request.getSession().getAttribute("filteredEmployees");
+            if (filteredEmployees != null) {
+                modelAndView.addObject("filteredEmployees", (List<Employee>) filteredEmployees);
+            } else {
+                modelAndView.addObject("filteredEmployees", service.getEmployeeService().findAllWithCount(DEFAULT_EMPLOYEES_COUNT));
+            }
+            request.getSession().removeAttribute("filteredEmployees");
         }
         return modelAndView;
     }
@@ -46,6 +62,15 @@ public class UniversityController {
         }
         modelAndView.addObject("service", service);
         return modelAndView;
+    }
+    
+    @PostMapping(value = "/filter")
+    public String filterFriends(@RequestParam(required = false) Integer count, HttpServletRequest request) {
+        List<Employee> filteredEmployees = service.getEmployeeService()
+                .findAllWithCount(count == null ? DEFAULT_EMPLOYEES_COUNT : count);
+        employeesUtil.filterEmployees(request, filteredEmployees);
+        request.getSession().setAttribute("filteredEmployees", filteredEmployees);
+        return "redirect:/university";
     }
     
     @PostMapping("/structure/addFaculty")
@@ -82,5 +107,9 @@ public class UniversityController {
         group.setGroupManager(groupManager);
         service.getGroupService().save(group);
         return "redirect:/university/structure";
+    }
+    
+    public EmployeesUtil getEmployeesUtil() {
+        return employeesUtil;
     }
 }

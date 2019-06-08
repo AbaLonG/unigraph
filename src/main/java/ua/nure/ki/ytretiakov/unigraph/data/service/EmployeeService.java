@@ -16,4 +16,6 @@ public interface EmployeeService extends Service<Employee, String> {
     List<Employee> findEmployeesByType(EmployeeType type);
     
     List<Employee> findAllTeachers();
+    
+    List<Employee> findAllWithCount(int count);
 }
