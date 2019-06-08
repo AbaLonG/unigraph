@@ -171,6 +171,16 @@ public class IndexController {
         return "redirect:/index?id=" + to;
     }
     
+    @PostMapping(value = "index/deleteComment", params = {"id", "commentId"})
+    public String deleteComment(@RequestParam String id, @RequestParam String commentId, HttpServletRequest request) {
+        try {
+            service.getCommentRepository().deleteById(Long.valueOf(commentId));
+            return "redirect:/index?id=" + id;
+        } catch (Exception e) {
+            return "redirect:/index";
+        }
+    }
+    
     public List<Comment> getCommentsFor(Employee employee) {
         List<Comment> comments = service.getCommentRepository().findCommentsByToEmployeeLogin(employee.getLogin());
         return comments == null ? Collections.EMPTY_LIST : comments;

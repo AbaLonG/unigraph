@@ -88,9 +88,7 @@
       </div>
     </div>
     <div class="col-sm-9 p-0 mt-3 mt-sm-0">
-
       <%--      Table --%>
-
       <div class="card border-primary" style="border-radius: 0 0 0.5rem 0.5rem; border-top: 0; border-right: 0">
         <div class="card-header pl-3 pb-2 rounded-0 text-white"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
@@ -142,9 +140,7 @@
           </table>
         </div>
       </div>
-
       <%--      Friends --%>
-
       <div class="card my-5 border-0">
         <div class="card-header pl-3 pb-2"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
@@ -169,9 +165,7 @@
           </div>
         </div>
       </div>
-
       <%--      Wall --%>
-
       <div class="card my-5 border-0">
         <div class="card-header pl-3 pb-2"
              style="background: linear-gradient(to bottom, #285EBE, #396dc3)">
@@ -197,26 +191,33 @@
                    style="background-color: white; border-radius: 0 0 0.5rem 0.5rem;">
                 <%-- Comments --%>
                 <c:forEach var="comment" items="${controller.getCommentsFor(employee)}">
-                  <div class="row mt-3 pt-2 border-top">
-                    <div class="col-6">
-                      <p class="mb-1">
-                        From: <a class="text-decoration-none text-primary"
-                                 href="${pageContext.request.contextPath}/index?id=${comment.fromEmployeeLogin}">${comment.fromEmployeeLogin}</a>
-                      </p>
-                    </div>
-                    <div class="col-6 text-right">
-                      <p class="mb-1">Date: ${comment.commentDate}</p>
-                    </div>
-                    <div class="col-12">
-                      <div class="m-0 p-2 border rounded-sm" style="min-height: 75px; max-height: 100px">
-                        <p class="m-0 p-0">
-                          <c:if test="${comment.content ne null}">
-                            ${comment.content.trim()}
-                          </c:if>
+                  <form action="${pageContext.request.contextPath}/index/deleteComment?id=${employee.login}&commentId=${comment.id}" method="post">
+                    <div class="row mt-3 pt-2 border-top">
+                      <div class="col-6">
+                        <p class="mb-1">
+                          From: <a class="text-decoration-none text-primary"
+                                   href="${pageContext.request.contextPath}/index?id=${comment.fromEmployeeLogin}">${comment.fromEmployeeLogin}</a>
                         </p>
                       </div>
+                      <div class="col-6 text-right">
+                        <p class="mb-1">Date: ${comment.commentDate}</p>
+                      </div>
+                      <div class="col-12">
+                        <div class="m-0 p-2 border rounded-sm" style="min-height: 75px; max-height: 100px">
+                          <p class="m-0 p-0">
+                            <c:if test="${comment.content ne null}">
+                              ${comment.content.trim()}
+                            </c:if>
+                          </p>
+                        </div>
+                      </div>
+                      <c:if test="${(comment.toEmployeeLogin == sessionUser.login) or (comment.fromEmployeeLogin == sessionUser.login)}">
+                        <div class="col-12">
+                          <button type="submit" class="btn btn-sm bg-white float-right text-danger border-0">Delete</button>
+                        </div>
+                      </c:if>
                     </div>
-                  </div>
+                  </form>
                 </c:forEach>
               </div>
             </div>
