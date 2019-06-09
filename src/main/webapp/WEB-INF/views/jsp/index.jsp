@@ -102,25 +102,29 @@
               <td>Kharkiv National University of Radioelectronics</td>
             </tr>
             <tr>
+              <td>Type</td>
+              <td>${employee.type.toString()}</td>
+            </tr>
+            <tr>
               <td>Faculty</td>
-              <td>${employee.cathedra.faculty.title}</td>
+              <td>
+                <a href="${pageContext.request.contextPath}/faculty?id=${employee.cathedra.faculty.title}">${employee.cathedra.faculty.title}</a>
+              </td>
             </tr>
             <tr>
               <td>Cathedra</td>
-              <td>${employee.cathedra.title}</td>
-            </tr>
-            <tr>
-              <td>Type</td>
-              <td>${employee.type.toString()}</td>
+              <td>
+                <a href="${pageContext.request.contextPath}/cathedra?id=${employee.cathedra.title}">${employee.cathedra.title}</a>
+              </td>
             </tr>
             <tr>
               <td>Group</td>
               <td>
                 <c:if test="${employee.type.toString() == 'Student'}">
-                  ${employee.group.title}
+                  <a href="${pageContext.request.contextPath}/group?id=${employee.group.title}">${employee.group.title}</a>
                 </c:if>
                 <c:if test="${employee.type.toString() == 'Teacher'}">
-                  ${groupOfTeacher.title}
+                  <a href="${pageContext.request.contextPath}/group?id=${groupOfTeacher.title}">${groupOfTeacher.title}</a>
                 </c:if>
               </td>
             </tr>
@@ -191,7 +195,8 @@
                    style="background-color: white; border-radius: 0 0 0.5rem 0.5rem;">
                 <%-- Comments --%>
                 <c:forEach var="comment" items="${controller.getCommentsFor(employee)}">
-                  <form action="${pageContext.request.contextPath}/index/deleteComment?id=${employee.login}&commentId=${comment.id}" method="post">
+                  <form action="${pageContext.request.contextPath}/index/deleteComment?id=${employee.login}&commentId=${comment.id}"
+                        method="post">
                     <div class="row mt-3 pt-2 border-top">
                       <div class="col-6">
                         <p class="mb-1">
@@ -213,7 +218,8 @@
                       </div>
                       <c:if test="${(comment.toEmployeeLogin == sessionUser.login) or (comment.fromEmployeeLogin == sessionUser.login)}">
                         <div class="col-12">
-                          <button type="submit" class="btn btn-sm bg-white float-right text-danger border-0">Delete</button>
+                          <button type="submit" class="btn btn-sm bg-white float-right text-danger border-0">Delete
+                          </button>
                         </div>
                       </c:if>
                     </div>
