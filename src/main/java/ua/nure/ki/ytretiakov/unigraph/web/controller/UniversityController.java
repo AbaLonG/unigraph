@@ -17,6 +17,7 @@ import ua.nure.ki.ytretiakov.unigraph.util.EmployeesUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/university")
@@ -66,9 +67,9 @@ public class UniversityController {
     
     @PostMapping(value = "/filter")
     public String filterFriends(@RequestParam(required = false) Integer count, HttpServletRequest request) {
-        List<Employee> filteredEmployees = service.getEmployeeService()
-                .findAllWithCount(count == null ? DEFAULT_EMPLOYEES_COUNT : count);
+        List<Employee> filteredEmployees = service.getEmployeeService().findAll();
         employeesUtil.filterEmployees(request, filteredEmployees);
+        filteredEmployees = filteredEmployees.stream().limit(count == null ? DEFAULT_EMPLOYEES_COUNT : count).collect(Collectors.toList());
         request.getSession().setAttribute("filteredEmployees", filteredEmployees);
         return "redirect:/university";
     }

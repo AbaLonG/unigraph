@@ -122,8 +122,8 @@
               <label for="nameFilter">Name Filter:</label>
               <input type="text" class="form-control" name="nameFilter" id="nameFilter">
               <br>
-              <label for="countFilter">Count fiLter:</label>
-              <input type="text" class="form-control" name="countFilter" id="countFilter">
+              <label for="countFilter">Count filter:</label>
+              <input type="text" class="form-control" name="countFilter" id="countFilter" value="20">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

@@ -53,4 +53,12 @@ public class Cathedra {
     public void setCathedraManager(Employee cathedraManager) {
         this.cathedraManager = cathedraManager;
     }
+    
+    public List<Group> getGroups() {
+        return groups;
+    }
+    
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
 }

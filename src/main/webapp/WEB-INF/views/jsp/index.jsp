@@ -108,23 +108,23 @@
             <tr>
               <td>Faculty</td>
               <td>
-                <a href="${pageContext.request.contextPath}/faculty?id=${employee.cathedra.faculty.title}">${employee.cathedra.faculty.title}</a>
+                <a href="${pageContext.request.contextPath}/faculty?facultyTitle=${employee.cathedra.faculty.title}">${employee.cathedra.faculty.title}</a>
               </td>
             </tr>
             <tr>
               <td>Cathedra</td>
               <td>
-                <a href="${pageContext.request.contextPath}/cathedra?id=${employee.cathedra.title}">${employee.cathedra.title}</a>
+                <a href="${pageContext.request.contextPath}/cathedra?cathedraTitle=${employee.cathedra.title}">${employee.cathedra.title}</a>
               </td>
             </tr>
             <tr>
               <td>Group</td>
               <td>
                 <c:if test="${employee.type.toString() == 'Student'}">
-                  <a href="${pageContext.request.contextPath}/group?id=${employee.group.title}">${employee.group.title}</a>
+                  <a href="${pageContext.request.contextPath}/group?groupTitle=${employee.group.title}">${employee.group.title}</a>
                 </c:if>
                 <c:if test="${employee.type.toString() == 'Teacher'}">
-                  <a href="${pageContext.request.contextPath}/group?id=${groupOfTeacher.title}">${groupOfTeacher.title}</a>
+                  <a href="${pageContext.request.contextPath}/group?groupTitle=${groupOfTeacher.title}">${groupOfTeacher.title}</a>
                 </c:if>
               </td>
             </tr>
@@ -154,7 +154,7 @@
         <div class="card-body p-0">
           <div class="d-flex flex-wrap px-2 pt-3 pb-2 m-0 border border-top-0 border-primary"
                style="background-color: white; border-radius: 0 0 0.5rem 0.5rem; min-height: 100px;">
-            <c:forEach var="friend" items="${fiveFriends}">
+            <c:forEach var="friend" items="${sixFriends}">
               <div class="my-0 mx-3 p-0">
                 <a href="${pageContext.request.contextPath}/index?id=${friend.login}">
                   <div class="rounded"

@@ -72,7 +72,7 @@ public class IndexController {
             modelAndView.addObject("sessionUser", sessionUser);
             modelAndView.addObject("avatarTitle", getAvatarForEmployee(pageEmployee));
             modelAndView.addObject("friends", pageEmployee.getFriends());
-            modelAndView.addObject("fiveFriends", pageEmployee.getFriends().stream().limit(5).collect(Collectors.toList()));
+            modelAndView.addObject("sixFriends", pageEmployee.getFriends().stream().limit(6).collect(Collectors.toList()));
             modelAndView.addObject("controller", this);
             if (pageEmployee.getType() == EmployeeType.Teacher) {
                 modelAndView.addObject("groupOfTeacher", service.getGroupService().findGroupOfManager(pageEmployee.getLogin()));
